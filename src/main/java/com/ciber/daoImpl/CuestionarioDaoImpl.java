@@ -30,6 +30,7 @@ public class CuestionarioDaoImpl implements ICuestionarioDao{
 		
 		String sql = "select * from principal.cuestionario c "
 				+ "inner join principal.curso cu on c.cur_codigo = cu.cur_codigo "
+				+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
 				+ "where c.cue_estado = 1";
 
 		return jdbcTemplate.query(sql, new CuestionarioSetExtractor());
@@ -59,11 +60,12 @@ public class CuestionarioDaoImpl implements ICuestionarioDao{
 
 	@Override
 	public int registrarCuestionario(Cuestionario cuestionario) {
+		System.out.println(cuestionario + " ::::::::::::");
 		
-		String sql = "INSERT INTO principal.cuestionario (cue_nombre, cue_instrucciones, cur_codigo, cue_fecha_inicio, cue_fecha_fin) VALUES(?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO principal.cuestionario (cue_nombre, cue_instrucciones, cur_codigo, cue_fecha_inicio, cue_fecha_fin, cuc_codigo) VALUES(?, ?, ?, ?, ?, ?);";
 
 		int result = jdbcTemplateEjecucion.update(sql,
-				new Object[] { cuestionario.getNombre(), cuestionario.getInstrucciones(), cuestionario.getCursoCodigo(), cuestionario.getFechaInicio(), cuestionario.getFechaFin()});
+				new Object[] { cuestionario.getNombre(), cuestionario.getInstrucciones(), cuestionario.getCursoCodigo(), cuestionario.getFechaInicio(), cuestionario.getFechaFin(), cuestionario.getCategoriaCodigo()});
 
 		try {
 
@@ -73,6 +75,7 @@ public class CuestionarioDaoImpl implements ICuestionarioDao{
 			parameter.addValue("curso", cuestionario.getCursoCodigo());
 			parameter.addValue("fechaInicio", cuestionario.getFechaInicio(), Types.TIMESTAMP);
 			parameter.addValue("fechaFin", cuestionario.getFechaFin(), Types.TIMESTAMP);
+			parameter.addValue("categoria", cuestionario.getCategoriaCodigo());
 
 			return result;
 
@@ -87,10 +90,10 @@ public class CuestionarioDaoImpl implements ICuestionarioDao{
 
 	@Override
 	public int actualizarCuestionario(Cuestionario cuestionario) {
-		String sql = "UPDATE principal.cuestionario SET cue_nombre = ?, cue_instrucciones = ?, cur_codigo = ?, cue_fecha_inicio = ?, cue_fecha_fin = ?, cue_estado = ? WHERE cue_codigo = ?;";
+		String sql = "UPDATE principal.cuestionario SET cue_nombre = ?, cue_instrucciones = ?, cur_codigo = ?, cue_fecha_inicio = ?, cue_fecha_fin = ?, cue_estado = ?, cuc_codigo = ? WHERE cue_codigo = ?;";
 
 		int result = jdbcTemplateEjecucion.update(sql,
-				new Object[] { cuestionario.getNombre(), cuestionario.getInstrucciones(), cuestionario.getCursoCodigo(), cuestionario.getFechaInicio(), cuestionario.getFechaFin(), cuestionario.getEstado(), cuestionario.getCodigo()});
+				new Object[] { cuestionario.getNombre(), cuestionario.getInstrucciones(), cuestionario.getCursoCodigo(), cuestionario.getFechaInicio(), cuestionario.getFechaFin(), cuestionario.getEstado(), cuestionario.getCategoriaCodigo(), cuestionario.getCodigo()});
 
 		try {
 
@@ -101,6 +104,7 @@ public class CuestionarioDaoImpl implements ICuestionarioDao{
 			parameter.addValue("fechaInicio", cuestionario.getFechaInicio(), Types.TIMESTAMP);
 			parameter.addValue("fechaFin", cuestionario.getFechaFin(), Types.TIMESTAMP);
 			parameter.addValue("estado", cuestionario.getEstado());
+			parameter.addValue("categoria", cuestionario.getCategoriaCodigo());
 			parameter.addValue("codigo", cuestionario.getCodigo());
 
 			return result;

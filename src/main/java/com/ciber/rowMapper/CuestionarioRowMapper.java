@@ -21,6 +21,8 @@ public class CuestionarioRowMapper implements RowMapper<Cuestionario>{
 		cuestionario.setFechaInicio(rs.getTimestamp("cue_fecha_inicio"));
 		cuestionario.setFechaFin(rs.getTimestamp("cue_fecha_fin"));
 		cuestionario.setEstado(rs.getInt("cue_estado"));
+		cuestionario.setCategoriaCodigo(rs.getInt("cuc_codigo"));
+		cuestionario.setCategoriaNombre(rs.getString("cuc_nombre"));
 		
 		return cuestionario;
 		
