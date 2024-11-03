@@ -50,17 +50,18 @@ public class CuestionarioDaoImpl implements ICuestionarioDao{
 	@Override
 	public List<Cuestionario> obtenerCuestionariosCurso(int codigo) {
 		
-		String sql = "select * from principal.cuestionario c "
-				+ "inner join principal.curso cu on c.cur_codigo = cu.cur_codigo "
-				+ "where c.cur_codigo = " + codigo + " and c.cue_estado = 1";
+		String sql = " SELECT * FROM principal.cuestionario c "
+				+ " INNER JOIN principal.curso cu ON c.cur_codigo = cu.cur_codigo "
+				+ " INNER JOIN principal.cuestionario_categoria cc ON c.cuc_codigo = cc.cuc_codigo "
+				+ " WHERE c.cur_codigo = ? AND c.cue_estado = 1 "
+				+ " AND CURRENT_DATE BETWEEN c.cue_fecha_inicio AND c.cue_fecha_fin;";
 
-		return jdbcTemplate.query(sql, new CuestionarioSetExtractor());
+		return jdbcTemplate.query(sql, new CuestionarioSetExtractor(), codigo);
 		
 	}
 
 	@Override
 	public int registrarCuestionario(Cuestionario cuestionario) {
-		System.out.println(cuestionario + " ::::::::::::");
 		
 		String sql = "INSERT INTO principal.cuestionario (cue_nombre, cue_instrucciones, cur_codigo, cue_fecha_inicio, cue_fecha_fin, cuc_codigo) VALUES(?, ?, ?, ?, ?, ?);";
 
@@ -90,6 +91,7 @@ public class CuestionarioDaoImpl implements ICuestionarioDao{
 
 	@Override
 	public int actualizarCuestionario(Cuestionario cuestionario) {
+		
 		String sql = "UPDATE principal.cuestionario SET cue_nombre = ?, cue_instrucciones = ?, cur_codigo = ?, cue_fecha_inicio = ?, cue_fecha_fin = ?, cue_estado = ?, cuc_codigo = ? WHERE cue_codigo = ?;";
 
 		int result = jdbcTemplateEjecucion.update(sql,
