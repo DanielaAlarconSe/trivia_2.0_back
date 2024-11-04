@@ -41,9 +41,10 @@ public class CuestionarioDaoImpl implements ICuestionarioDao{
 		
 		String sql = "select * from principal.cuestionario c "
 				+ "inner join principal.curso cu on c.cur_codigo = cu.cur_codigo "
-				+ "where c.cue_codigo = " + codigo + " and c.cue_estado = 1";
+				+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
+				+ "where c.cue_codigo = ? and c.cue_estado = 1";
 
-		return jdbcTemplate.query(sql, new CuestionarioSetExtractor());
+		return jdbcTemplate.query(sql, new CuestionarioSetExtractor(),codigo);
 		
 	}
 	
