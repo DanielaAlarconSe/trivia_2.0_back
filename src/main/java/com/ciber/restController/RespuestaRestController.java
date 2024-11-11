@@ -3,6 +3,8 @@ package com.ciber.restController;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,5 +66,13 @@ public class RespuestaRestController {
 		return service.actualizarCalificacion(respuestaCuestionario);
 	}
 	
-
+	@GetMapping(path = "obtener-respuesta-escalafon/{token}")
+	public ResponseEntity<?> obtenerResultadosEscalafon(@PathVariable String token) {
+		try {
+			List<RespuestaCuestionario> resultados = service.obtenerResultadosEscalafonPorToken(token);
+			return new ResponseEntity<>(resultados, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+	}
 }

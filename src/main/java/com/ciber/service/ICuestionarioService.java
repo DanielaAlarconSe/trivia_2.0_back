@@ -15,5 +15,7 @@ public interface ICuestionarioService {
 	public int registrarCuestionario(Cuestionario cuestionario);
 
 	public int actualizarCuestionario(Cuestionario cuestionario);
+	
+	public Cuestionario obtenerCuestionarioPorToken(String token);
 
 }

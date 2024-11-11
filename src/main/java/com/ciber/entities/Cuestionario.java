@@ -18,6 +18,7 @@ public class Cuestionario {
 	private Timestamp  fechaFin;
 	private Integer categoriaCodigo;
 	private String categoriaNombre;
+	private String token;
 	private Integer estado;
 
 }

@@ -23,6 +23,7 @@ public class CuestionarioRowMapper implements RowMapper<Cuestionario>{
 		cuestionario.setEstado(rs.getInt("cue_estado"));
 		cuestionario.setCategoriaCodigo(rs.getInt("cuc_codigo"));
 		cuestionario.setCategoriaNombre(rs.getString("cuc_nombre"));
+		cuestionario.setToken(rs.getString("cue_token"));
 		
 		return cuestionario;
 		
