@@ -33,9 +33,9 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao{
 	@Override
 	public float obtenerResultadoTrivia(Integer codigo) {
 		
-		String sql = "select rc.rec_calificacion_total from principal.respuesta_cuestionario rc where rc.rec_codigo = " + codigo + " ;";
+		String sql = "select rc.rec_calificacion_total from principal.respuesta_cuestionario rc where rc.rec_codigo = ? ;";
 	    
-	    return jdbcTemplate.queryForObject(sql, Float.class);
+	    return jdbcTemplate.queryForObject(sql, Float.class,codigo);
 		
 	}
 
@@ -49,6 +49,34 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao{
 				+ "order by rc.rec_calificacion_total desc;";
 
 		return jdbcTemplate.query(sql, new CalificacionSetExtractor());
+		
+	}
+	
+	@Override
+	public List<Calificacion> obtenerCalificacionesTrivia(Integer codigo) {
+		
+		String sql = "select * from principal.respuesta_cuestionario rc "
+				+ "inner join principal.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
+				+ "inner join principal.curso c on cu.cur_codigo = c.cur_codigo "
+				+ "where rc.cue_codigo = ? "
+				+ "group by rc.rec_codigo, c.cur_codigo, cu.cue_codigo, rc.rec_calificacion_total "
+				+ "order by rc.rec_calificacion_total desc;";
+
+		return jdbcTemplate.query(sql, new CalificacionSetExtractor(),codigo);
+		
+	}
+	
+	@Override
+	public List<Calificacion> obtenerCalificacionesToken(String token) {
+		
+		String sql = "select * from principal.respuesta_cuestionario rc "
+				+ "inner join principal.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
+				+ "inner join principal.curso c on cu.cur_codigo = c.cur_codigo "
+				+ "WHERE cu.cue_token = ? AND cu.cue_estado = 1 AND cu.cue_fecha_fin <= NOW() "
+				+ "group by rc.rec_codigo, c.cur_codigo, cu.cue_codigo, rc.rec_calificacion_total "
+				+ "ORDER BY rc.rec_calificacion_total DESC, rc.rec_fecha_registro ASC;";
+
+		return jdbcTemplate.query(sql, new CalificacionSetExtractor(), token);
 		
 	}
 

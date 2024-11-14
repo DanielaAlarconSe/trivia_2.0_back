@@ -11,6 +11,10 @@ public interface IResultadosReportesDao {
 	
 	public List<Calificacion> obtenerCalificaciones();
 	
+	public List<Calificacion> obtenerCalificacionesTrivia(Integer codigo);
+	
+	public List<Calificacion> obtenerCalificacionesToken(String token);
+	
 	List<ReporteAgrupadoDto> generarDatosReporteAgrupado(Integer cuestionario, Integer[] preguntas);
 
 }

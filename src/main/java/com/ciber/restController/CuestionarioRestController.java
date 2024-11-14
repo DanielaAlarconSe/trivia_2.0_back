@@ -39,6 +39,11 @@ public class CuestionarioRestController {
 	public List<Cuestionario> obtenerCuestionariosCurso(@PathVariable Integer codigo) {
 		return service.obtenerCuestionariosCurso(codigo);
 	}
+	
+	@GetMapping(path = "obtener-cuestionarios-curso-general/{codigo}")
+	public List<Cuestionario> obtenerCuestionariosCursoGeneral(@PathVariable Integer codigo) {
+		return service.obtenerCuestionariosCursoGeneral(codigo);
+	}
 
 	@PostMapping(path = "registrar-cuestionario")
 	public int registrarCuestionario(@RequestBody Cuestionario cuestionario) {

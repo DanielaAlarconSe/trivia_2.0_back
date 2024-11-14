@@ -29,6 +29,16 @@ public class ResultadosReportesRestController {
 		return service.obtenerCalificaciones();
 	}
 	
+	@GetMapping(path = "obtener-calificaciones-trivia/{codigo}")
+	public List<Calificacion> obtenerCalificacionesTrivia(@PathVariable Integer codigo) {
+		return service.obtenerCalificacionesTrivia(codigo);
+	}
+	
+	@GetMapping(path = "obtener-calificaciones-token/{token}")
+	public List<Calificacion> obtenerCalificacionesToken(@PathVariable String token) {
+		return service.obtenerCalificacionesToken(token);
+	}
+	
 	@GetMapping(path = "generar-datos-reporte-agrupado/{cuestionario}/{preguntas}")
 	public List<ReporteAgrupadoDto> obtenerResultadoTrivia(@PathVariable Integer cuestionario, @PathVariable Integer[] preguntas) {
 		return service.generarDatosReporteAgrupado(cuestionario, preguntas);

@@ -60,6 +60,18 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 		return jdbcTemplate.query(sql, new CuestionarioSetExtractor(), codigo);
 
 	}
+	
+	@Override
+	public List<Cuestionario> obtenerCuestionariosCursoGeneral(int codigo) {
+		
+		String sql = " SELECT * FROM principal.cuestionario c "
+				+ " INNER JOIN principal.curso cu ON c.cur_codigo = cu.cur_codigo "
+				+ " INNER JOIN principal.cuestionario_categoria cc ON c.cuc_codigo = cc.cuc_codigo "
+				+ " WHERE c.cur_codigo = ? AND c.cue_estado = 1 ";
+
+		return jdbcTemplate.query(sql, new CuestionarioSetExtractor(), codigo);
+		
+	}
 
 	@Override
 	public int registrarCuestionario(Cuestionario cuestionario) {

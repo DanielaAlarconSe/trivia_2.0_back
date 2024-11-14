@@ -33,6 +33,13 @@ public class CuestionarioServiceImpl implements ICuestionarioService {
 
 		return cuestionarioDao.obtenerCuestionariosCurso(codigo);
 	}
+	
+	@Override
+	public List<Cuestionario> obtenerCuestionariosCursoGeneral(int codigo) {
+		
+		return cuestionarioDao.obtenerCuestionariosCursoGeneral(codigo);
+		
+	}
 
 	@Override
 	public int registrarCuestionario(Cuestionario cuestionario) {
