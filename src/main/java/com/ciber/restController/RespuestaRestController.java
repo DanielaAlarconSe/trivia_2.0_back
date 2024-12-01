@@ -75,4 +75,9 @@ public class RespuestaRestController {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@GetMapping(path = "validar-ip")
+	public boolean validarIp() {
+		return service.validarIp();
+	}
 }

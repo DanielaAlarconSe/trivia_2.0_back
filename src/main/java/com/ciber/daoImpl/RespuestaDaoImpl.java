@@ -2,6 +2,8 @@ package com.ciber.daoImpl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,6 +29,9 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 	@Autowired
 	@Qualifier("JDBCTemplateEjecucion")
 	public JdbcTemplate jdbcTemplateEjecucion;
+
+	@Autowired
+	private HttpServletRequest request;
 
 	@Override
 	public List<RespuestaOpcion> obtenerRespuestasCuestionario(int codigo) {
@@ -117,14 +122,16 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 	@Override
 	public int registrarRespuestaCuestionario(RespuestaCuestionario respuestaCuestionario) {
 
+		String ip = request.getHeader("X-Forwarded-For");
+
 		String sql = "INSERT INTO principal.respuesta_cuestionario "
-				+ "(rec_estudiante_nombre, cue_codigo, rec_calificacion_total, rec_total_preguntas) "
-				+ "VALUES(?, ?, ?, (SELECT COUNT(*) FROM principal.pregunta WHERE cue_codigo = ? and pre_estado = 1));";
+				+ "(rec_estudiante_nombre, cue_codigo, rec_calificacion_total, rec_total_preguntas, rec_ip_address) "
+				+ "VALUES(?, ?, ?, (SELECT COUNT(*) FROM principal.pregunta WHERE cue_codigo = ? and pre_estado = 1), ?);";
 
 		int result = jdbcTemplateEjecucion.update(sql,
 				new Object[] { respuestaCuestionario.getEstudianteNombre(),
 						respuestaCuestionario.getCuestionarioCodigo(), respuestaCuestionario.getCalificacionTotal(),
-						respuestaCuestionario.getCuestionarioCodigo() });
+						respuestaCuestionario.getCuestionarioCodigo(), ip });
 
 		try {
 
@@ -132,7 +139,8 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 			parameter.addValue("1", respuestaCuestionario.getEstudianteNombre());
 			parameter.addValue("2", respuestaCuestionario.getCuestionarioCodigo());
 			parameter.addValue("3", respuestaCuestionario.getCalificacionTotal());
-			parameter.addValue("4", respuestaCuestionario.getCuestionarioCodigo());
+			parameter.addValue("4", ip);
+			parameter.addValue("5", respuestaCuestionario.getCuestionarioCodigo());
 
 			return result;
 
@@ -205,6 +213,19 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 				+ " ORDER BY rc.rec_calificacion_total DESC ";
 
 		return jdbcTemplate.query(sql, new RespuestaCuestionarioSetExtractor(), token);
+	}
+
+	@Override
+	public boolean validarIp() {
+
+		String ip = request.getHeader("X-Forwarded-For");
+		
+		//ip = "12345";
+		
+		int result = 0;
+		String sql = " select COUNT(rec_codigo) from principal.respuesta_cuestionario where rec_ip_address = ? ";
+		result = jdbcTemplate.queryForObject(sql, new Object[] { ip }, Integer.class);
+		return result > 0 ? true : false;
 	}
 
 }

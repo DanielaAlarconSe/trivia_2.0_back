@@ -26,4 +26,6 @@ public interface IRespuestaDao {
 	public int actualizarCalificacion(RespuestaCuestionario respuestaCuestionario);
 
 	public List<RespuestaCuestionario> obtenerResultadosEscalafonPorToken(String token);
+	
+	public boolean validarIp();
 }

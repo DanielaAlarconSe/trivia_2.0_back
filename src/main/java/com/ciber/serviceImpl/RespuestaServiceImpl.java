@@ -99,4 +99,9 @@ public class RespuestaServiceImpl implements IRespuestaService {
 		return respuestaDao.obtenerResultadosEscalafonPorToken(token);
 	}
 
+	@Override
+	public boolean validarIp() {
+		return respuestaDao.validarIp();
+	}
+
 }
