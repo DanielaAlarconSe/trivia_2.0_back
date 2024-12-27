@@ -19,5 +19,7 @@ public interface ICuestionarioDao {
 	public int actualizarCuestionario(Cuestionario cuestionario);
 	
 	public Cuestionario obtenerCuestionarioPorToken(String token);
+	
+	public List<Cuestionario> obtenerCuestionariosEntidad(int codigo);
 
 }

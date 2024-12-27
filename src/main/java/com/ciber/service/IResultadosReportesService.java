@@ -2,6 +2,7 @@ package com.ciber.service;
 
 import java.util.List;
 
+import com.ciber.dto.EmailNotificacionDto;
 import com.ciber.dto.ReporteAgrupadoDto;
 import com.ciber.entities.Calificacion;
 
@@ -17,4 +18,5 @@ public interface IResultadosReportesService {
 	
 	List<ReporteAgrupadoDto> generarDatosReporteAgrupado(Integer cuestionario, Integer[] preguntas);
 
+	public void EnviarCorreoEntidad(EmailNotificacionDto email);
 }

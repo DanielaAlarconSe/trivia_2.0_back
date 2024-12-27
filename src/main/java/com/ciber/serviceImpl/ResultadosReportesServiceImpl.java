@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ciber.dao.IResultadosReportesDao;
+import com.ciber.dto.EmailNotificacionDto;
 import com.ciber.dto.ReporteAgrupadoDto;
 import com.ciber.entities.Calificacion;
 import com.ciber.service.IResultadosReportesService;
@@ -48,6 +49,12 @@ public class ResultadosReportesServiceImpl implements IResultadosReportesService
 	public List<ReporteAgrupadoDto> generarDatosReporteAgrupado(Integer cuestionario, Integer[] preguntas) {
 		
 		return dao.generarDatosReporteAgrupado(cuestionario, preguntas);
+		
+	}
+
+	@Override
+	public void EnviarCorreoEntidad(EmailNotificacionDto email) {
+		dao.EnviarCorreoEntidad(email);
 		
 	}
 

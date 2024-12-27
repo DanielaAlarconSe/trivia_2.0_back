@@ -11,4 +11,5 @@ public class UsuarioDto {
 	private String contrasena;
 	private Integer estado;
 	private Integer tipo;
+	private Integer entidad;
 }

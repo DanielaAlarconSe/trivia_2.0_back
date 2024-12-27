@@ -66,5 +66,10 @@ public class CuestionarioRestController {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al procesar la solicitud");
 	    }
 	}
+	
+	@GetMapping(path = "obtener-cuestionario-entidad/{codigo}")
+	public List<Cuestionario> obtenerCuestionarioEntidad(@PathVariable Integer codigo) {
+		return service.obtenerCuestionariosEntidad(codigo);
+	}
 
 }

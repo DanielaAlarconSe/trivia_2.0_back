@@ -3,11 +3,16 @@ package com.ciber.restController;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ciber.dto.EmailNotificacionDto;
 import com.ciber.dto.ReporteAgrupadoDto;
 import com.ciber.entities.Calificacion;
 import com.ciber.service.IResultadosReportesService;
@@ -44,4 +49,9 @@ public class ResultadosReportesRestController {
 		return service.generarDatosReporteAgrupado(cuestionario, preguntas);
 	}
 
+	@PutMapping("email/entidad")
+	public void enviarCorreoEntidad(@Validated @RequestBody EmailNotificacionDto email, BindingResult result) {
+		System.out.println(email + "TRAE DE EMAIL");
+		service.EnviarCorreoEntidad(email);
+	}
 }
