@@ -9,13 +9,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AsignacionDto {
 
-	private Integer usuariocodigo;
-	private String usuarioNombre;
+	private Integer usuarioCodigo;
+	private Integer personaCodigo;
+	private String personaNombre;
+	private String personaApellido;
+	private String personaEmail;
+	private Integer entidadCodigo;
+	private String entidadNombre;
+	private String entidadEmail;
 	private Integer asignacionCodigo;
 	private Integer cuestionarioCodigo;
+	private String cuestionarioNombre;
 	private Timestamp fechaAsignacion;
 	private Timestamp fechaFinalizacion;
-	private Integer estado;
+	private Integer seguimientoCodigo;
 	private String seguimientoNombre;
+	private Integer estado;
 	
 }

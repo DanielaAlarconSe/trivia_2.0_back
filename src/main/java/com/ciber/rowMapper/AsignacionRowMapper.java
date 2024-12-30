@@ -13,14 +13,22 @@ public class AsignacionRowMapper implements RowMapper<AsignacionDto> {
 	public AsignacionDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
 		AsignacionDto asi = new AsignacionDto();
-		asi.setUsuariocodigo(rs.getInt("usu_codigo"));
-		asi.setUsuarioNombre(rs.getString("usu_nombre"));
+		asi.setUsuarioCodigo(rs.getInt("usu_codigo"));
+		asi.setPersonaCodigo(rs.getInt("per_codigo"));
+		asi.setPersonaNombre(rs.getString("per_nombre"));
+		asi.setPersonaApellido(rs.getString("per_apellido"));
+		asi.setPersonaEmail(rs.getString("per_email"));
+		asi.setEntidadCodigo(rs.getInt("ent_codigo"));
+		asi.setEntidadNombre(rs.getString("ent_nombre"));
+		asi.setEntidadEmail(rs.getString("ent_email"));
 		asi.setAsignacionCodigo(rs.getInt("ast_codigo"));
 		asi.setCuestionarioCodigo(rs.getInt("cue_codigo"));
+		asi.setCuestionarioNombre(rs.getString("cue_nombre"));
 		asi.setFechaAsignacion(rs.getTimestamp("ast_fecha_asignacion"));
 		asi.setFechaFinalizacion(rs.getTimestamp("ast_fecha_finalizacion"));
-		asi.setEstado(rs.getInt("ast_estado"));
+		asi.setSeguimientoCodigo(rs.getInt("seg_codigo"));
 		asi.setSeguimientoNombre(rs.getString("seg_nombre"));
+		asi.setEstado(rs.getInt("ast_estado"));
 
 		return asi;
 	}

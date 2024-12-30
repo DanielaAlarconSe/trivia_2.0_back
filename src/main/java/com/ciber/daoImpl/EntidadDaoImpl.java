@@ -101,7 +101,7 @@ public class EntidadDaoImpl implements IEntidadDao {
 	@Override
 	public List<Entidad> obtenerEntidad() {
 		
-		String sql = " select * from principal.entidad e where e.ent_estado = 1 ";
+		String sql = " select * from principal.entidad e where e.ent_estado = 1 order by e.ent_codigo asc";
 		
 		return jdbcTemplate.query(sql, new EntidadSetExtractor());
 	}

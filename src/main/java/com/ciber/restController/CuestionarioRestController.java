@@ -67,9 +67,9 @@ public class CuestionarioRestController {
 	    }
 	}
 	
-	@GetMapping(path = "obtener-cuestionario-entidad/{codigo}")
-	public List<Cuestionario> obtenerCuestionarioEntidad(@PathVariable Integer codigo) {
-		return service.obtenerCuestionariosEntidad(codigo);
+	@GetMapping(path = "obtener-cuestionario-aspirantes")
+	public List<Cuestionario> obtenerCuestionariosAspirantes() {
+		return service.obtenerCuestionariosAspirantes();
 	}
 
 }

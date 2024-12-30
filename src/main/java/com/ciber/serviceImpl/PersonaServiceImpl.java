@@ -52,4 +52,10 @@ public class PersonaServiceImpl implements IPersonaService {
 		return personaDao.obtenerInstructores();
 	}
 
+	@Override
+	public List<PersonaDto> obtenerAspirantesEntidad(Integer entidad) {
+		
+		return personaDao.obtenerAspirantesEntidad(entidad);
+	}
+
 }

@@ -57,6 +57,13 @@ public class PersonaRestController {
 
 	}
 	
+	@GetMapping(path = "obtener-aspirante-entidad/{entidad}")
+	public List<PersonaDto> obtenerAspirantesEntidad(@PathVariable Integer entidad) {
+
+		return personaService.obtenerAspirantesEntidad(entidad);
+
+	}
+	
 	@GetMapping(path = "obtener-instructores")
 	public List<Persona> obtenerInstructores() {
 

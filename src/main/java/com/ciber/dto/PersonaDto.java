@@ -15,5 +15,7 @@ public class PersonaDto {
 	private String pw;
 	private int tipoUsuarioCodigo;
 	private String tipoUsuarioNombre;
+	private int entidadCodigo;
+	private String entidadNombre;
 	
 }

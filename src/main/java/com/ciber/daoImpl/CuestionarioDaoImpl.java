@@ -29,7 +29,7 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 	public List<Cuestionario> obtenerCuestionarios() {
 
 		String sql = "select * from principal.cuestionario c "
-				+ "inner join principal.curso cu on c.cur_codigo = cu.cur_codigo "
+				+ "left join principal.curso cu on c.cur_codigo = cu.cur_codigo "
 				+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
 				+ "where c.cue_estado = 1";
 
@@ -40,7 +40,7 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 	public List<Cuestionario> obtenerCuestionarioCodigo(int codigo) {
 
 		String sql = "select * from principal.cuestionario c "
-				+ "inner join principal.curso cu on c.cur_codigo = cu.cur_codigo "
+				+ "left join principal.curso cu on c.cur_codigo = cu.cur_codigo "
 				+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
 				+ "where c.cue_codigo = ? and c.cue_estado = 1";
 
@@ -82,7 +82,8 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 			cuestionario.setToken(token);
 		}
 
-		String sql = "INSERT INTO principal.cuestionario (cue_nombre, cue_instrucciones, cur_codigo, cue_fecha_inicio, cue_fecha_fin, cuc_codigo, cue_token) VALUES(?, ?, ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO principal.cuestionario (cue_nombre, cue_instrucciones, cur_codigo, "
+				+ "cue_fecha_inicio, cue_fecha_fin, cuc_codigo, cue_token) VALUES(?, ?, ?, ?, ?, ?, ?);";
 
 		int result = jdbcTemplateEjecucion.update(sql,
 				new Object[] { cuestionario.getNombre(), cuestionario.getInstrucciones(), cuestionario.getCursoCodigo(),
@@ -172,14 +173,14 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 	}
 
 	@Override
-	public List<Cuestionario> obtenerCuestionariosEntidad(int codigo) {
+	public List<Cuestionario> obtenerCuestionariosAspirantes() {
 
-		String sql = " SELECT DISTINCT c.* " + " FROM principal.asignacion_trivia at "
-				+ " INNER JOIN principal.cuestionario c ON at.cue_codigo = c.cue_codigo "
-				+ " INNER JOIN principal.usuario u ON at.usu_codigo = u.usu_codigo "
-				+ " INNER JOIN principal.entidad e ON u.ent_codigo = e.ent_codigo " + " WHERE e.ent_codigo = ? ";
+		String sql = "select * from principal.cuestionario c "
+				+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
+				+ "left join principal.curso cr on c.cur_codigo = cr.cur_codigo "
+				+ "where c.cuc_codigo = 2 and c.cue_estado = 1";
 		
-		return jdbcTemplate.query(sql, new CuestionarioSetExtractor(), codigo);
+		return jdbcTemplate.query(sql, new CuestionarioSetExtractor());
 	}
 
 }

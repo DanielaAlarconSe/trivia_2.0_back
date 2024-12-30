@@ -9,7 +9,7 @@ public class UsuarioDto {
 	private Integer codigo;
 	private String usuario;
 	private String contrasena;
-	private Integer estado;
 	private Integer tipo;
 	private Integer entidad;
+	private Integer estado;
 }

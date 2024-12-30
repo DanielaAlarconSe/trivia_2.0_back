@@ -19,6 +19,8 @@ public class PersonaDtoRowMapper implements RowMapper<PersonaDto>{
         persona.setUsuario(rs.getInt("usuario"));
         persona.setTipoUsuarioCodigo(rs.getInt("ust_codigo"));
         persona.setTipoUsuarioNombre(rs.getString("ust_nombre"));
+        persona.setEntidadCodigo(rs.getInt("ent_codigo"));
+        persona.setEntidadNombre(rs.getString("ent_nombre"));
         persona.setPw(rs.getString("uwd2"));
 		return persona;
 	}

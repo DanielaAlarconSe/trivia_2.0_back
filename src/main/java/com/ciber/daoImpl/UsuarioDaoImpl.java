@@ -25,8 +25,10 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	@SuppressWarnings("deprecation")
 	@Override
 	public Usuario buscarUsuario(String username) {
-		String sql = " SELECT * FROM principal.vista_usuario vu " + " WHERE vu.usu_nombre = ? AND vu.usu_estado = 1 "
-				+ " LIMIT 1;";
+		String sql = "SELECT * FROM principal.vista_usuario vu "
+				+ " left join principal.usuario u on vu.per_codigo = u.per_codigo "
+				+ " left join principal.entidad e on u.ent_codigo = e.ent_codigo "
+				+ " WHERE vu.usu_nombre = ? AND vu.usu_estado = 1 LIMIT 1;";
 		return jdbcTemplate.queryForObject(sql, new Object[] { username }, new UsuarioRowMapper());
 	}
 
@@ -42,14 +44,14 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	@Override
 	public int registrarUsuario(UsuarioDto usuario) {
 
-		String sql = "INSERT INTO principal.usuario (per_codigo  , usu_nombre  , uwd2 , ust_codigo, ent_codigo) "
-				+ "VALUES( ?, ?, ?, ?, ? ) ";
+		String sql = "INSERT INTO principal.usuario (per_codigo, usu_nombre, uwd2, ust_codigo, ent_codigo) "
+				+ "VALUES(?, ?, ?, ?, ?) ";
 
 		int result = jdbcTemplateEjecucion.update(sql,
 				new Object[] { usuario.getCodigo(), usuario.getUsuario(), usuario.getContrasena(), usuario.getTipo(), usuario.getEntidad() });
 
 		try {
-
+		
 			MapSqlParameterSource parameter = new MapSqlParameterSource();
 			parameter.addValue("codigo", usuario.getCodigo());
 			parameter.addValue("usuario", usuario.getUsuario());

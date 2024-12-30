@@ -1,5 +1,6 @@
 package com.ciber.daoImpl;
 
+import java.sql.Types;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,13 @@ public class AsignacionDaoImpl implements IAsignacionDao {
 	@Override
 	public List<AsignacionDto> obtenerAspirantesPorEntidad(Integer entidad) {
 
-		String sql = " SELECT a.usu_codigo, a.usu_nombre, at.ast_codigo, at.cue_codigo, "
-				+ " at.ast_fecha_asignacion, at.ast_fecha_finalizacion, at.ast_estado, "
-				+ " s.seg_nombre FROM usuario a " + " LEFT JOIN "
-				+ " asignacion_trivia at ON a.usu_codigo = at.usu_codigo " + " LEFT JOIN "
-				+ " seguimiento s ON at.seg_codigo = s.seg_codigo " + " WHERE a.ent_codigo = ? ";
+		String sql = "select * from principal.usuario u "
+				+ "inner join principal.persona p on u.per_codigo = p.per_codigo "
+				+ "inner join principal.entidad e on u.ent_codigo = e.ent_codigo "
+				+ "left join principal.asignacion_trivia at on u.usu_codigo = at.usu_codigo "
+				+ "left join principal.cuestionario cu on at.cue_codigo = cu.cue_codigo "
+				+ "left join principal.seguimiento s on at.seg_codigo = s.seg_codigo "
+				+ "where u.ent_codigo = ? and u.usu_estado = 1 and at.ast_codigo is not null";
 
 		return jdbcTemplate.query(sql, new AsignacionSetExtractor(), entidad);
 	}
@@ -40,18 +43,18 @@ public class AsignacionDaoImpl implements IAsignacionDao {
 	public int registrarAsignacionTrivia(AsignacionTrivia asignacion) {
 
 		String sql = " INSERT INTO principal.asignacion_trivia ( usu_codigo, cue_codigo, "
-				+ "  seg_codigo, ast_fecha_finalizacion) " + " VALUES (?, ?, ?, ?) ";
+				+ "  seg_codigo, ast_fecha_asignacion, ast_fecha_finalizacion) " + " VALUES (?, ?, 1, ?, ?) ";
 
 		int result = jdbcTemplateEjecucion.update(sql, new Object[] { asignacion.getUsuario(),
-				asignacion.getCuestionario(), asignacion.getSeguimiento(), asignacion.getFechaFinalizacion() });
+				asignacion.getCuestionario(), asignacion.getFechaAsignacion(), asignacion.getFechaFinalizacion() });
 
 		try {
 
 			MapSqlParameterSource parameter = new MapSqlParameterSource();
 			parameter.addValue("usuario", asignacion.getUsuario());
 			parameter.addValue("cuestionario", asignacion.getCuestionario());
-			parameter.addValue("seguimiento", asignacion.getSeguimiento());
-			parameter.addValue("fecha_finalizacion", asignacion.getFechaFinalizacion());
+			parameter.addValue("fecha_asignacion", asignacion.getFechaAsignacion(), Types.TIMESTAMP);
+			parameter.addValue("fecha_finalizacion", asignacion.getFechaFinalizacion(), Types.TIMESTAMP);
 
 			return result;
 
@@ -66,17 +69,17 @@ public class AsignacionDaoImpl implements IAsignacionDao {
 	@Override
 	public int actualizarAsignacionTrivia(AsignacionTrivia asignacion) {
 
-		String sql = " UPDATE principal.asignacion_trivia " + " SET seg_codigo = ?, ast_fecha_finalizacion = ? "
+		String sql = " UPDATE principal.asignacion_trivia " + " SET ast_fecha_asignacion = ?, ast_fecha_finalizacion = ? "
 				+ " WHERE ast_codigo = ? ";
 
-		int result = jdbcTemplateEjecucion.update(sql, new Object[] { asignacion.getSeguimiento(),
-				asignacion.getFechaFinalizacion(), asignacion.getCodigo() });
+		int result = jdbcTemplateEjecucion.update(sql, new Object[] {
+				asignacion.getFechaAsignacion(), asignacion.getFechaFinalizacion(), asignacion.getCodigo() });
 
 		try {
 
 			MapSqlParameterSource parameter = new MapSqlParameterSource();
-			parameter.addValue("seguimiento", asignacion.getSeguimiento());
-			parameter.addValue("fecha_finalizacion", asignacion.getFechaFinalizacion());
+			parameter.addValue("fecha_finalizacion", asignacion.getFechaAsignacion(), Types.TIMESTAMP);
+			parameter.addValue("fecha_finalizacion", asignacion.getFechaFinalizacion(), Types.TIMESTAMP);
 			parameter.addValue("codigo", asignacion.getCodigo());
 
 			return result;

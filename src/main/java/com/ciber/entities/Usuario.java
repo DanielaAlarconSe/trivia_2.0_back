@@ -12,6 +12,8 @@ public class Usuario {
 	private String password;
 	private boolean state;
 	private PersonaUsuario persona;
+	private int entidadCodigo;
+	private String entidadNombre;
 	private int role;
 
 }

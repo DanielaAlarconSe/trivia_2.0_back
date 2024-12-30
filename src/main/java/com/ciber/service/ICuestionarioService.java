@@ -20,6 +20,6 @@ public interface ICuestionarioService {
 	
 	public Cuestionario obtenerCuestionarioPorToken(String token);
 	
-	public List<Cuestionario> obtenerCuestionariosEntidad(int codigo);
+	public List<Cuestionario> obtenerCuestionariosAspirantes();
 
 }
