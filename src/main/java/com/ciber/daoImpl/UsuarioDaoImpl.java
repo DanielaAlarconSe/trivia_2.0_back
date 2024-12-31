@@ -44,11 +44,11 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	@Override
 	public int registrarUsuario(UsuarioDto usuario) {
 
-		String sql = "INSERT INTO principal.usuario (per_codigo, usu_nombre, uwd2, ust_codigo, ent_codigo) "
-				+ "VALUES(?, ?, ?, ?, ?) ";
+		String sql = "INSERT INTO principal.usuario (per_codigo, usu_nombre, uwd2, ust_codigo, ent_codigo, usu_token) "
+				+ "VALUES(?, ?, ?, ?, ?, ?) ";
 
 		int result = jdbcTemplateEjecucion.update(sql,
-				new Object[] { usuario.getCodigo(), usuario.getUsuario(), usuario.getContrasena(), usuario.getTipo(), usuario.getEntidad() });
+				new Object[] { usuario.getCodigo(), usuario.getUsuario(), usuario.getContrasena(), usuario.getTipo(), usuario.getEntidad(), usuario.getToken() });
 
 		try {
 		
@@ -58,6 +58,7 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 			parameter.addValue("clave", usuario.getContrasena());
 			parameter.addValue("tipo", usuario.getTipo());
 			parameter.addValue("entidad", usuario.getEntidad());
+			parameter.addValue("token", usuario.getToken());
 
 			return result;
 

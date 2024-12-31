@@ -14,6 +14,7 @@ public class AsignacionDto {
 	private String personaNombre;
 	private String personaApellido;
 	private String personaEmail;
+	private String personaToken;
 	private Integer entidadCodigo;
 	private String entidadNombre;
 	private String entidadEmail;
