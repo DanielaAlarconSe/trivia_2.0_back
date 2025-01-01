@@ -27,6 +27,7 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	public Usuario buscarUsuario(String username) {
 		String sql = "SELECT * FROM principal.vista_usuario vu "
 				+ " left join principal.usuario u on vu.per_codigo = u.per_codigo "
+				+ " left join principal.usuario_tipo ut on u.ust_codigo = ut.ust_codigo "
 				+ " left join principal.entidad e on u.ent_codigo = e.ent_codigo "
 				+ " WHERE vu.usu_nombre = ? AND vu.usu_estado = 1 LIMIT 1;";
 		return jdbcTemplate.queryForObject(sql, new Object[] { username }, new UsuarioRowMapper());

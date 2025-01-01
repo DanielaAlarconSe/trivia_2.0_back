@@ -25,5 +25,11 @@ public class SeguimientoServiceImpl implements ISeguimientoService{
 	public void EnviarCorreoAspirante(EmailNotificacionDto email) {
 		seguimientoDao.EnviarCorreoAspirante(email);
 	}
+	
+	@Override
+	public void EnviarCorreoEntidad(EmailNotificacionDto email) {
+		seguimientoDao.EnviarCorreoEntidad(email);
+		
+	}
 
 }

@@ -9,6 +9,8 @@ public interface IAsignacionDao {
 
 	public List<AsignacionDto> obtenerAspirantesPorEntidad(Integer entidad);
 	
+	public List<AsignacionDto> obtenerAspirante(Integer codigo);
+	
 	public int registrarAsignacionTrivia(AsignacionTrivia asignacion);
 
 	public int actualizarAsignacionTrivia(AsignacionTrivia asignacion);

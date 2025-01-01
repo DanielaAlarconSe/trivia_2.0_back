@@ -10,4 +10,6 @@ public interface ISeguimientoDao {
 	public List<Seguimiento> obtenerSeguimiento();
 	
 	public void EnviarCorreoAspirante(EmailNotificacionDto email);
+	
+	public void EnviarCorreoEntidad(EmailNotificacionDto email);
 }

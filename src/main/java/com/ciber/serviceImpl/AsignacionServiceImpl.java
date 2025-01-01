@@ -20,6 +20,11 @@ public class AsignacionServiceImpl implements IAsignacionService {
 	public List<AsignacionDto> obtenerAspirantesPorEntidad(Integer entidad) {
 		return asignacionDao.obtenerAspirantesPorEntidad(entidad);
 	}
+	
+	@Override
+	public List<AsignacionDto> obtenerAspirante(Integer codigo) {
+		return asignacionDao.obtenerAspirante(codigo);
+	}
 
 	@Override
 	public int registrarAsignacionTrivia(AsignacionTrivia asignacion) {

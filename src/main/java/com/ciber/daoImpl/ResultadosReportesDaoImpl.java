@@ -15,11 +15,9 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 import com.ciber.dao.IResultadosReportesDao;
-import com.ciber.dto.EmailNotificacionDto;
 import com.ciber.dto.ReporteAgrupadoDto;
 import com.ciber.entities.Calificacion;
 import com.ciber.resultSetExtractor.CalificacionSetExtractor;
-import com.ciber.util.EmailComponent;
 
 @Repository
 public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
@@ -130,33 +128,6 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
 				return dto;
 			}
 		});
-	}
-
-	@Override
-	public void EnviarCorreoEntidad(EmailNotificacionDto email) {
-
-		EmailNotificacionDto informacionCorreo = new EmailNotificacionDto();
-		
-		//PRUEBA
-//		informacionCorreo.setAspiranteNombre("Daniela Alarcón Sepúlveda");
-//		informacionCorreo.setDestinatarioEntidad("jd.cordoba97@gmail.com");
-//		informacionCorreo.setCuestionarioNombre("Puesto Desarrollador de Software");
-//		informacionCorreo.setEntidadNombre("Entidad de Prueba");
-//		informacionCorreo.setFechaRegistro("26/12/2024");
-//		informacionCorreo.setPuntaje("5 puntos");
-
-		//PRODUCCION
-		informacionCorreo.setAspiranteNombre(email.getAspiranteNombre());
-		informacionCorreo.setDestinatarioEntidad(email.getDestinatarioEntidad());
-		informacionCorreo.setCuestionarioNombre(email.getCuestionarioNombre());
-		informacionCorreo.setEntidadNombre(email.getEntidadNombre());
-		informacionCorreo.setFechaRegistro(email.getFechaRegistro());
-		informacionCorreo.setPuntaje(email.getPuntaje());
-		informacionCorreo.setAsunto("Resultados Prueba Diagnóstica " + email.getCuestionarioNombre());
-
-		EmailComponent.enviarNotificacionEntidad(informacionCorreo);
-		;
-
 	}
 
 }

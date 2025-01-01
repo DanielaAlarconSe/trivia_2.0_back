@@ -38,6 +38,21 @@ public class AsignacionDaoImpl implements IAsignacionDao {
 
 		return jdbcTemplate.query(sql, new AsignacionSetExtractor(), entidad);
 	}
+	
+	@Override
+	public List<AsignacionDto> obtenerAspirante(Integer codigo) {
+		
+		String sql = "select * from principal.usuario u "
+				+ "inner join principal.persona p on u.per_codigo = p.per_codigo "
+				+ "inner join principal.entidad e on u.ent_codigo = e.ent_codigo "
+				+ "left join principal.asignacion_trivia at on u.usu_codigo = at.usu_codigo "
+				+ "left join principal.cuestionario cu on at.cue_codigo = cu.cue_codigo "
+				+ "left join principal.seguimiento s on at.seg_codigo = s.seg_codigo "
+				+ "where u.usu_codigo = ? and u.usu_estado = 1 and at.ast_codigo is not null";
+
+		return jdbcTemplate.query(sql, new AsignacionSetExtractor(), codigo);
+		
+	}
 
 	@Override
 	public int registrarAsignacionTrivia(AsignacionTrivia asignacion) {

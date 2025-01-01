@@ -7,13 +7,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Usuario {
 
-	private int codigo;
+	private Integer codigo;
 	private String username;
 	private String password;
-	private boolean state;
 	private PersonaUsuario persona;
-	private int entidadCodigo;
+	private Integer tipoUsurioCodigo;
+	private String tipoUsurioNombre;
+	private Integer entidadCodigo;
 	private String entidadNombre;
-	private int role;
+	private Integer role;
+	private boolean state;
 
 }

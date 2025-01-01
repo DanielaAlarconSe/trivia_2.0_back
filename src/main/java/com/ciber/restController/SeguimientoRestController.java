@@ -32,4 +32,10 @@ public class SeguimientoRestController {
 		System.out.println(email + "TRAE DE EMAIL");
 		seguimientoservice.EnviarCorreoAspirante(email);
 	}
-}
+	
+	@PutMapping("email/entidad")
+	public void enviarCorreoEntidad(@Validated @RequestBody EmailNotificacionDto email, BindingResult result) {
+		System.out.println(email + "TRAE DE EMAIL");
+		seguimientoservice.EnviarCorreoEntidad(email);
+	}
+}	

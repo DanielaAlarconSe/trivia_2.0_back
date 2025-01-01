@@ -27,6 +27,11 @@ public class AsignacionRestController {
 		return asignacionService.obtenerAspirantesPorEntidad(entidad);
 	}
 	
+	@GetMapping(path = "obtener-aspirante/{codigo}")
+	public List<AsignacionDto> obtenerAspirante(@PathVariable Integer codigo) {
+		return asignacionService.obtenerAspirante(codigo);
+	}
+	
 	@PostMapping(path = "registrar-asignacion")
 	public int registrarAsignacionTrivia(@RequestBody AsignacionTrivia asignacion) {
 		return asignacionService.registrarAsignacionTrivia(asignacion);

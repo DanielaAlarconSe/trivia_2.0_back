@@ -77,7 +77,7 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 	public int registrarCuestionario(Cuestionario cuestionario) {
 
 		String token = null;
-		if (cuestionario.getCategoriaCodigo() == 3) {
+		if (cuestionario.getCategoriaCodigo() == 3 || cuestionario.getCategoriaCodigo() == 2) {
 			token = UUID.randomUUID().toString().replace("-", "");
 			cuestionario.setToken(token);
 		}
@@ -115,7 +115,7 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 	@Override
 	public int actualizarCuestionario(Cuestionario cuestionario) {
 
-		if (cuestionario.getCategoriaCodigo() == 3) {
+		if (cuestionario.getCategoriaCodigo() == 3 || cuestionario.getCategoriaCodigo() == 2) {
 			if (cuestionario.getToken() == null) {
 				String token = UUID.randomUUID().toString().replace("-", "");
 				cuestionario.setToken(token);
@@ -157,7 +157,7 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 	public Cuestionario obtenerCuestionarioPorToken(String token) {
 
 		String sql = " SELECT * FROM principal.cuestionario c "
-				+ " INNER JOIN principal.curso cu on c.cur_codigo = cu.cur_codigo "
+				+ " left JOIN principal.curso cu on c.cur_codigo = cu.cur_codigo "
 				+ " INNER JOIN principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
 				+ " WHERE c.cue_token = ? AND c.cue_estado = 1 "
 				+ " AND CURRENT_TIMESTAMP BETWEEN c.cue_fecha_inicio AND c.cue_fecha_fin ";

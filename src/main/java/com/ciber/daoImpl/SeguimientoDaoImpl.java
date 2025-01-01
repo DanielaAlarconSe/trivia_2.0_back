@@ -55,5 +55,33 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 		EmailComponent.enviarNotificacion(informacionCorreo);
 
 	}
+	
+	
+	@Override
+	public void EnviarCorreoEntidad(EmailNotificacionDto email) {
+
+		EmailNotificacionDto informacionCorreo = new EmailNotificacionDto();
+		
+		//PRUEBA
+//		informacionCorreo.setAspiranteNombre("Daniela Alarcón Sepúlveda");
+//		informacionCorreo.setDestinatarioEntidad("jd.cordoba97@gmail.com");
+//		informacionCorreo.setCuestionarioNombre("Puesto Desarrollador de Software");
+//		informacionCorreo.setEntidadNombre("Entidad de Prueba");
+//		informacionCorreo.setFechaRegistro("26/12/2024");
+//		informacionCorreo.setPuntaje("5 puntos");
+
+		//PRODUCCION
+		informacionCorreo.setAspiranteNombre(email.getAspiranteNombre());
+		informacionCorreo.setDestinatarioEntidad(email.getDestinatarioEntidad());
+		informacionCorreo.setCuestionarioNombre(email.getCuestionarioNombre());
+		informacionCorreo.setEntidadNombre(email.getEntidadNombre());
+		informacionCorreo.setFechaRegistro(email.getFechaRegistro());
+		informacionCorreo.setPuntaje(email.getPuntaje());
+		informacionCorreo.setAsunto("Resultados Prueba Diagnóstica " + email.getCuestionarioNombre());
+
+		EmailComponent.enviarNotificacionEntidad(informacionCorreo);
+		;
+
+	}
 
 }
