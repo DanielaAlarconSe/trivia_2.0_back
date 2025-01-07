@@ -6,5 +6,5 @@ import com.ciber.entities.CuestionarioCategoria;
 
 public interface ICuestionarioCategoriaDao {
 
-	public List<CuestionarioCategoria> obtenerCategorias();
+	public List<CuestionarioCategoria> obtenerCategorias(Integer usuarioTipo);
 }

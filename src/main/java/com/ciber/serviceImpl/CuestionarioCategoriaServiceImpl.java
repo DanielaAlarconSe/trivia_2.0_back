@@ -16,8 +16,8 @@ public class CuestionarioCategoriaServiceImpl implements ICuestionarioCategoriaS
 	ICuestionarioCategoriaDao categoriaDao;
 
 	@Override
-	public List<CuestionarioCategoria> obtenerCategorias() {
-		return categoriaDao.obtenerCategorias();
+	public List<CuestionarioCategoria> obtenerCategorias(Integer usuarioTipo) {
+		return categoriaDao.obtenerCategorias(usuarioTipo);
 	}
 
 }

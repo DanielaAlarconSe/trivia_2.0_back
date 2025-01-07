@@ -25,9 +25,9 @@ public class CuestionarioRestController {
 	@Autowired
 	ICuestionarioService service;
 
-	@GetMapping(path = "obtener-cuestionarios")
-	public List<Cuestionario> obtenerCuestionarios() {
-		return service.obtenerCuestionarios();
+	@GetMapping(path = "obtener-cuestionarios/{usuario}/{persona}")
+	public List<Cuestionario> obtenerCuestionarios(@PathVariable Integer usuario, @PathVariable Integer persona) {
+		return service.obtenerCuestionarios(usuario, persona);
 	}
 
 	@GetMapping(path = "obtener-cuestionario/{codigo}")
@@ -39,7 +39,7 @@ public class CuestionarioRestController {
 	public List<Cuestionario> obtenerCuestionariosCurso(@PathVariable Integer codigo) {
 		return service.obtenerCuestionariosCurso(codigo);
 	}
-	
+
 	@GetMapping(path = "obtener-cuestionarios-curso-general/{codigo}")
 	public List<Cuestionario> obtenerCuestionariosCursoGeneral(@PathVariable Integer codigo) {
 		return service.obtenerCuestionariosCursoGeneral(codigo);
@@ -57,16 +57,32 @@ public class CuestionarioRestController {
 
 	@GetMapping(path = "obtener-cuestionario-token/{token}")
 	public ResponseEntity<?> obtenerTriviaPorToken(@PathVariable String token) {
-	    try {
-	        Cuestionario cuestionario = service.obtenerCuestionarioPorToken(token);
-	        return ResponseEntity.ok(cuestionario);
-	    } catch (EntityNotFoundException e) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró un cuestionario con el token proporcionado");
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al procesar la solicitud");
-	    }
+		try {
+			Cuestionario cuestionario = service.obtenerCuestionarioPorToken(token);
+			return ResponseEntity.ok(cuestionario);
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("No se encontró un cuestionario con el token proporcionado");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Ocurrió un error al procesar la solicitud");
+		}
 	}
-	
+
+	@GetMapping(path = "obtener-cuestionario-token-aspirante/{token}")
+	public ResponseEntity<?> obtenerCuestionarioPorTokenAspirante(@PathVariable String token) {
+		try {
+			Cuestionario cuestionario = service.obtenerCuestionarioPorTokenAspirante(token);
+			return ResponseEntity.ok(cuestionario);
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body("No se encontró un cuestionario con el token proporcionado");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Ocurrió un error al procesar la solicitud");
+		}
+	}
+
 	@GetMapping(path = "obtener-cuestionario-aspirantes")
 	public List<Cuestionario> obtenerCuestionariosAspirantes() {
 		return service.obtenerCuestionariosAspirantes();

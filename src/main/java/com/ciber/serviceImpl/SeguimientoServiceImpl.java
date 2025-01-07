@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ciber.dao.ISeguimientoDao;
 import com.ciber.dto.EmailNotificacionDto;
+import com.ciber.entities.AsignacionTrivia;
 import com.ciber.entities.Seguimiento;
 import com.ciber.service.ISeguimientoService;
 
@@ -29,6 +30,13 @@ public class SeguimientoServiceImpl implements ISeguimientoService{
 	@Override
 	public void EnviarCorreoEntidad(EmailNotificacionDto email) {
 		seguimientoDao.EnviarCorreoEntidad(email);
+		
+	}
+
+	@Override
+	public int actualizarSeguimiento(AsignacionTrivia asignacion) {
+		
+		return seguimientoDao.actualizarSeguimiento(asignacion);
 		
 	}
 

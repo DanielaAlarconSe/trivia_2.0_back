@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -55,11 +56,12 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 
 	@Override
 	public int obtenerUltimoRegistro() {
-
-		String sql = "select rc.rec_codigo from principal.respuesta_cuestionario rc order by rc.rec_codigo desc limit 1;";
-
-		return jdbcTemplate.queryForObject(sql, Integer.class);
-
+	    String sql = "select rc.rec_codigo from principal.respuesta_cuestionario rc order by rc.rec_codigo desc limit 1;";
+	    try {
+	        return jdbcTemplate.queryForObject(sql, Integer.class);
+	    } catch (EmptyResultDataAccessException e) {
+	        return 0; // Retornar un valor por defecto si no hay registros
+	    }
 	}
 
 	@Override

@@ -6,5 +6,5 @@ import com.ciber.entities.CuestionarioCategoria;
 
 public interface ICuestionarioCategoriaService {
 
-	public List<CuestionarioCategoria> obtenerCategorias();
+	public List<CuestionarioCategoria> obtenerCategorias(Integer usuarioTipo);
 }

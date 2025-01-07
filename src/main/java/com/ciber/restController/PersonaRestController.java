@@ -38,7 +38,7 @@ public class PersonaRestController {
 
 	@PostMapping(path = "registrar-persona")
 	public int registrar(@RequestBody Persona persona) {
-		System.out.println(persona);
+
 		return personaService.registrar(persona);
 
 	}
@@ -46,24 +46,26 @@ public class PersonaRestController {
 	@PutMapping(path = "actualizar-persona")
 	public int actualizar(@RequestBody Persona persona) {
 
+		System.out.print(persona);
+
 		return personaService.actualizar(persona);
 
 	}
-	
+
 	@GetMapping(path = "obtener-personas-usuario")
 	public List<PersonaDto> obtenerPersonasUsuario() {
 
 		return personaService.obtenerPersonasUsuario();
 
 	}
-	
+
 	@GetMapping(path = "obtener-aspirante-entidad/{entidad}")
 	public List<PersonaDto> obtenerAspirantesEntidad(@PathVariable Integer entidad) {
 
 		return personaService.obtenerAspirantesEntidad(entidad);
 
 	}
-	
+
 	@GetMapping(path = "obtener-instructores")
 	public List<Persona> obtenerInstructores() {
 

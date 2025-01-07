@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ciber.dto.EmailNotificacionDto;
+import com.ciber.entities.AsignacionTrivia;
 import com.ciber.entities.Seguimiento;
 import com.ciber.service.ISeguimientoService;
 
@@ -37,5 +38,10 @@ public class SeguimientoRestController {
 	public void enviarCorreoEntidad(@Validated @RequestBody EmailNotificacionDto email, BindingResult result) {
 		System.out.println(email + "TRAE DE EMAIL");
 		seguimientoservice.EnviarCorreoEntidad(email);
+	}
+	
+	@PutMapping(path = "actualizar-seguimiento")
+	public int actualizarAsignacionTrivia(@RequestBody AsignacionTrivia asignacion) {
+		return seguimientoservice.actualizarSeguimiento(asignacion);
 	}
 }	

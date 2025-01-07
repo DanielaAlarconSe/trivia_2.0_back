@@ -24,14 +24,26 @@ public class CursoDaoImpl implements ICursoDao {
 	public JdbcTemplate jdbcTemplateEjecucion;
 
 	@Override
-	public List<Curso> obtenerCursos() {
+	public List<Curso> obtenerCursos(Integer usuario, Integer persona) {
 
-		String sql = " SELECT c.cur_codigo , c.cur_nombre , c.cur_descripcion , p.per_nombre || ' ' || p.per_apellido AS nombre_completo, p.per_codigo "
-				+ " FROM principal.curso c " 
-				+ " INNER JOIN principal.persona p ON c.per_codigo = p.per_codigo "
-				+ " WHERE c.cur_estado = 1 ";
+		String sql = "";
+		
+		if(usuario == 2) {
+			
+			sql = "select c.cur_codigo , c.cur_nombre , c.cur_descripcion, "
+					+ "p.per_nombre || ' ' || p.per_apellido as nombre_completo, p.per_codigo from principal.curso c "
+					+ "inner join principal.persona p on c.per_codigo = p.per_codigo "
+					+ "where c.cur_estado = 1 and p.per_codigo = ?";
+			return jdbcTemplate.query(sql, new CursoSetExtractor(), persona);
+			
+		}else {
+			sql = "select c.cur_codigo , c.cur_nombre , c.cur_descripcion, "
+					+ "p.per_nombre || ' ' || p.per_apellido as nombre_completo, p.per_codigo from principal.curso c "
+					+ "inner join principal.persona p on c.per_codigo = p.per_codigo "
+					+ "where c.cur_estado = 1";
+			return jdbcTemplate.query(sql, new CursoSetExtractor());
+		}
 
-		return jdbcTemplate.query(sql, new CursoSetExtractor());
 	}
 
 	@Override

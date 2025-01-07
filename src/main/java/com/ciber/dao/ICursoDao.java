@@ -6,7 +6,7 @@ import com.ciber.entities.Curso;
 
 public interface ICursoDao {
 
-	public List<Curso> obtenerCursos();
+	public List<Curso> obtenerCursos(Integer usuario, Integer persona);
 
 	public int registrarCurso(Curso curso);
 

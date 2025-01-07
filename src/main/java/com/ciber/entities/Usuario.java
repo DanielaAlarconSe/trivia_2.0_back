@@ -16,6 +16,7 @@ public class Usuario {
 	private Integer entidadCodigo;
 	private String entidadNombre;
 	private Integer role;
+	private String token;
 	private boolean state;
 
 }

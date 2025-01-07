@@ -19,9 +19,15 @@ public class CuestionarioCategoriaDaoImpl implements ICuestionarioCategoriaDao{
 	public JdbcTemplate jdbcTemplate;
 	
 	@Override
-	public List<CuestionarioCategoria> obtenerCategorias() {
-
-		String sql = " select c.cuc_codigo, c.cuc_nombre, c.cuc_descripcion from principal.cuestionario_categoria c where cuc_estado = 1 ";
+	public List<CuestionarioCategoria> obtenerCategorias(Integer usuarioTipo) {
+		
+		String sql = "";
+		
+		if(usuarioTipo == 2) {
+			sql = "select * from principal.cuestionario_categoria c where c.cuc_estado = 1 and c.cuc_codigo in (1,3)";		
+		}else {
+			sql = "select * from principal.cuestionario_categoria c where c.cuc_estado = 1 ";
+		}
 		
 		return jdbcTemplate.query(sql, new CategoriaSetExtractor());
 	}

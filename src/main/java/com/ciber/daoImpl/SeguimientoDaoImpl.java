@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.ciber.dao.ISeguimientoDao;
 import com.ciber.dto.EmailNotificacionDto;
+import com.ciber.entities.AsignacionTrivia;
 import com.ciber.entities.Seguimiento;
 import com.ciber.resultSetExtractor.SeguimientoSetExtractor;
 import com.ciber.util.EmailComponent;
@@ -19,6 +21,10 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 	@Autowired
 	@Qualifier("JDBCTemplateConsulta")
 	public JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	@Qualifier("JDBCTemplateEjecucion")
+	public JdbcTemplate jdbcTemplateEjecucion;
 
 	@Override
 	public List<Seguimiento> obtenerSeguimiento() {
@@ -55,14 +61,13 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 		EmailComponent.enviarNotificacion(informacionCorreo);
 
 	}
-	
-	
+
 	@Override
 	public void EnviarCorreoEntidad(EmailNotificacionDto email) {
 
 		EmailNotificacionDto informacionCorreo = new EmailNotificacionDto();
-		
-		//PRUEBA
+
+		// PRUEBA
 //		informacionCorreo.setAspiranteNombre("Daniela Alarcón Sepúlveda");
 //		informacionCorreo.setDestinatarioEntidad("jd.cordoba97@gmail.com");
 //		informacionCorreo.setCuestionarioNombre("Puesto Desarrollador de Software");
@@ -70,7 +75,7 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 //		informacionCorreo.setFechaRegistro("26/12/2024");
 //		informacionCorreo.setPuntaje("5 puntos");
 
-		//PRODUCCION
+		// PRODUCCION
 		informacionCorreo.setAspiranteNombre(email.getAspiranteNombre());
 		informacionCorreo.setDestinatarioEntidad(email.getDestinatarioEntidad());
 		informacionCorreo.setCuestionarioNombre(email.getCuestionarioNombre());
@@ -81,6 +86,30 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 
 		EmailComponent.enviarNotificacionEntidad(informacionCorreo);
 		;
+
+	}
+
+	@Override
+	public int actualizarSeguimiento(AsignacionTrivia asignacion) {
+
+		String sql = " UPDATE principal.asignacion_trivia SET seg_codigo = ? " + " WHERE ast_codigo = ? ";
+
+		int result = jdbcTemplateEjecucion.update(sql,
+				new Object[] { asignacion.getSeguimiento(), asignacion.getCodigo() });
+
+		try {
+
+			MapSqlParameterSource parameter = new MapSqlParameterSource();
+			parameter.addValue("1", asignacion.getSeguimiento());
+			parameter.addValue("2", asignacion.getCodigo());
+
+			return result;
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return 0;
+		}
 
 	}
 

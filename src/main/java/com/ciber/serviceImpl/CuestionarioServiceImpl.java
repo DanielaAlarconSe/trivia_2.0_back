@@ -16,9 +16,9 @@ public class CuestionarioServiceImpl implements ICuestionarioService {
 	ICuestionarioDao cuestionarioDao;
 
 	@Override
-	public List<Cuestionario> obtenerCuestionarios() {
+	public List<Cuestionario> obtenerCuestionarios(Integer usuario, Integer persona) {
 
-		return cuestionarioDao.obtenerCuestionarios();
+		return cuestionarioDao.obtenerCuestionarios(usuario, persona);
 
 	}
 
@@ -70,6 +70,13 @@ public class CuestionarioServiceImpl implements ICuestionarioService {
 	@Override
 	public List<Cuestionario> obtenerCuestionariosAspirantes() {
 		return cuestionarioDao.obtenerCuestionariosAspirantes();
+	}
+
+	@Override
+	public Cuestionario obtenerCuestionarioPorTokenAspirante(String token) {
+		
+		return cuestionarioDao.obtenerCuestionarioPorTokenAspirante(token);
+		
 	}
 
 }

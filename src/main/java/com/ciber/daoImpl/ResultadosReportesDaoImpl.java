@@ -44,10 +44,9 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
 
 		String sql = "select * from principal.respuesta_cuestionario rc "
 				+ "inner join principal.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
-				+ "inner join principal.curso c on cu.cur_codigo = c.cur_codigo "
+				+ "left join principal.curso c on cu.cur_codigo = c.cur_codigo "
 				+ "group by rc.rec_codigo, c.cur_codigo, cu.cue_codigo, rc.rec_calificacion_total "
 				+ "order by rc.rec_calificacion_total desc;";
-		
 
 		return jdbcTemplate.query(sql, new CalificacionSetExtractor());
 
@@ -58,7 +57,7 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
 
 		String sql = "select * from principal.respuesta_cuestionario rc "
 				+ "inner join principal.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
-				+ "inner join principal.curso c on cu.cur_codigo = c.cur_codigo " + "where rc.cue_codigo = ? "
+				+ "left join principal.curso c on cu.cur_codigo = c.cur_codigo " + "where rc.cue_codigo = ? "
 				+ "group by rc.rec_codigo, c.cur_codigo, cu.cue_codigo, rc.rec_calificacion_total "
 				+ "order by rc.rec_calificacion_total desc;";
 
@@ -71,7 +70,7 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
 
 		String sql = "select * from principal.respuesta_cuestionario rc "
 				+ "inner join principal.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
-				+ "inner join principal.curso c on cu.cur_codigo = c.cur_codigo "
+				+ "left join principal.curso c on cu.cur_codigo = c.cur_codigo "
 				+ "WHERE cu.cue_token = ? AND cu.cue_estado = 1 AND cu.cue_fecha_fin <= NOW() "
 				+ "group by rc.rec_codigo, c.cur_codigo, cu.cue_codigo, rc.rec_calificacion_total "
 				+ "ORDER BY rc.rec_calificacion_total DESC, rc.rec_fecha_registro ASC;";

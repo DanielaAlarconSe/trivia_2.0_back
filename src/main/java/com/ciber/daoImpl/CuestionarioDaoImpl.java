@@ -26,14 +26,28 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 	public JdbcTemplate jdbcTemplateEjecucion;
 
 	@Override
-	public List<Cuestionario> obtenerCuestionarios() {
+	public List<Cuestionario> obtenerCuestionarios(Integer usuario, Integer persona) {
 
-		String sql = "select * from principal.cuestionario c "
-				+ "left join principal.curso cu on c.cur_codigo = cu.cur_codigo "
-				+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
-				+ "where c.cue_estado = 1";
+		String sql = "";
 
-		return jdbcTemplate.query(sql, new CuestionarioSetExtractor());
+		if (usuario == 2) {
+
+			sql = "select * from principal.cuestionario c "
+					+ "left join principal.curso cu on c.cur_codigo = cu.cur_codigo "
+					+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
+					+ "where c.cue_estado = 1 and cu.per_codigo = ?";
+			return jdbcTemplate.query(sql, new CuestionarioSetExtractor(), persona);
+
+		} else {
+
+			sql = "select * from principal.cuestionario c "
+					+ "left join principal.curso cu on c.cur_codigo = cu.cur_codigo "
+					+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
+					+ "where c.cue_estado = 1";
+			return jdbcTemplate.query(sql, new CuestionarioSetExtractor());
+		}
+
+		
 	}
 
 	@Override
@@ -64,12 +78,26 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 	@Override
 	public List<Cuestionario> obtenerCuestionariosCursoGeneral(int codigo) {
 
-		String sql = " SELECT * FROM principal.cuestionario c "
-				+ " INNER JOIN principal.curso cu ON c.cur_codigo = cu.cur_codigo "
-				+ " INNER JOIN principal.cuestionario_categoria cc ON c.cuc_codigo = cc.cuc_codigo "
-				+ " WHERE c.cur_codigo = ? AND c.cue_estado = 1 ";
+		String sql = "";
+		
+		if(codigo == 0) {
+			
+			sql = "select * from principal.cuestionario c "
+					+ "left join principal.curso cu on c.cur_codigo = cu.cur_codigo "
+					+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
+					+ "where c.cue_estado = 1";
+			return jdbcTemplate.query(sql, new CuestionarioSetExtractor());
+			
+		}else {
+			
+			sql = "select * from principal.cuestionario c "
+					+ "left join principal.curso cu on c.cur_codigo = cu.cur_codigo "
+					+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
+					+ "where c.cur_codigo = ? and c.cue_estado = 1";
+			return jdbcTemplate.query(sql, new CuestionarioSetExtractor(), codigo);
+			
+		}
 
-		return jdbcTemplate.query(sql, new CuestionarioSetExtractor(), codigo);
 
 	}
 
@@ -179,8 +207,27 @@ public class CuestionarioDaoImpl implements ICuestionarioDao {
 				+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
 				+ "left join principal.curso cr on c.cur_codigo = cr.cur_codigo "
 				+ "where c.cuc_codigo = 2 and c.cue_estado = 1";
-		
+
 		return jdbcTemplate.query(sql, new CuestionarioSetExtractor());
+	}
+
+	@Override
+	public Cuestionario obtenerCuestionarioPorTokenAspirante(String token) {
+		
+		String sql = "select * from principal.cuestionario c "
+				+ "left join principal.curso cu on c.cur_codigo = cu.cur_codigo "
+				+ "inner join principal.cuestionario_categoria cc on c.cuc_codigo = cc.cuc_codigo "
+				+ "left join principal.asignacion_trivia at on c.cue_codigo = at.cue_codigo "
+				+ "where c.cue_token = ? and c.cue_estado = 1 and current_timestamp between at.ast_fecha_asignacion and at.ast_fecha_finalizacion";
+
+		List<Cuestionario> cuestionarios = jdbcTemplate.query(sql, new CuestionarioSetExtractor(), token);
+
+		if (cuestionarios.isEmpty()) {
+			return null;
+		} else {
+			return cuestionarios.get(0);
+		}
+		
 	}
 
 }
