@@ -70,7 +70,7 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 		usuario2.setTipo(usuario.getTipo());
 		usuario2.setUsuario(usuario.getUsuario());
 		usuario2.setEntidad(usuario.getEntidad());
-		usuario2.setToken(usuario.getToken());
+		//usuario2.setToken(usuario.getToken());
 		usuario2.setContrasena(clave);
 
 		return usuariodao.registrarUsuario(usuario2);

@@ -18,7 +18,7 @@ public class AsignacionRowMapper implements RowMapper<AsignacionDto> {
 		asi.setPersonaNombre(rs.getString("per_nombre"));
 		asi.setPersonaApellido(rs.getString("per_apellido"));
 		asi.setPersonaEmail(rs.getString("per_email"));
-		asi.setPersonaToken(rs.getString("usu_token"));
+		//asi.setPersonaToken(rs.getString("usu_token"));
 		asi.setEntidadCodigo(rs.getInt("ent_codigo"));
 		asi.setEntidadNombre(rs.getString("ent_nombre"));
 		asi.setEntidadEmail(rs.getString("ent_email"));
