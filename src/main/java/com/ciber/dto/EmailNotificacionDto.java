@@ -18,4 +18,5 @@ public class EmailNotificacionDto {
 	private String fechaRegistro;
 	private String puntaje;
 	private String cuestionarioNombre;
+	private String enlaceLogin;
 }

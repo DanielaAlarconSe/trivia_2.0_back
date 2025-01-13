@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.ciber.dao.ISeguimientoDao;
+import com.ciber.dao.IWebParametroDao;
 import com.ciber.dto.EmailNotificacionDto;
 import com.ciber.entities.AsignacionTrivia;
 import com.ciber.entities.Seguimiento;
@@ -25,6 +27,12 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 	@Autowired
 	@Qualifier("JDBCTemplateEjecucion")
 	public JdbcTemplate jdbcTemplateEjecucion;
+	
+	@Value("${parametro.enlace-login-aspirante}")
+	private String enlace;
+	
+	@Autowired
+	private IWebParametroDao wepDao;
 
 	@Override
 	public List<Seguimiento> obtenerSeguimiento() {
@@ -37,19 +45,11 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 
 	@Override
 	public void EnviarCorreoAspirante(EmailNotificacionDto email) {
+		
+		String enlaceLogin = wepDao.getValor(enlace);
 
 		EmailNotificacionDto informacionCorreo = new EmailNotificacionDto();
 
-		// PRUEBA
-//		informacionCorreo.setAspiranteNombre("Daniela Alarcón Sepúlveda");
-//		informacionCorreo.setDestinatarioAspirante("jd.cordoba97@gmail.com");
-//		informacionCorreo.setUsuario("ejemplo@gmail.com");
-//		informacionCorreo.setClave("12345678");
-//		informacionCorreo.setEntidadNombre("Entidad Prueba");
-//		informacionCorreo.setFechaFinalizacion("28/12/2024");
-//		informacionCorreo.setAsunto("Prueba Diagnóstica - " + "Entidad Prueba");
-
-		// PRODUCCION
 		informacionCorreo.setAspiranteNombre(email.getAspiranteNombre());
 		informacionCorreo.setDestinatarioAspirante(email.getDestinatarioAspirante());
 		informacionCorreo.setUsuario(email.getUsuario());
@@ -57,25 +57,17 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 		informacionCorreo.setEntidadNombre(email.getEntidadNombre());
 		informacionCorreo.setFechaFinalizacion(email.getFechaFinalizacion());
 		informacionCorreo.setAsunto("Prueba Diagnóstica - " + email.getEntidadNombre());
-
+		informacionCorreo.setEnlaceLogin(enlaceLogin);
+		
 		EmailComponent.enviarNotificacion(informacionCorreo);
 
 	}
 
 	@Override
 	public void EnviarCorreoEntidad(EmailNotificacionDto email) {
-
+		
 		EmailNotificacionDto informacionCorreo = new EmailNotificacionDto();
 
-		// PRUEBA
-//		informacionCorreo.setAspiranteNombre("Daniela Alarcón Sepúlveda");
-//		informacionCorreo.setDestinatarioEntidad("jd.cordoba97@gmail.com");
-//		informacionCorreo.setCuestionarioNombre("Puesto Desarrollador de Software");
-//		informacionCorreo.setEntidadNombre("Entidad de Prueba");
-//		informacionCorreo.setFechaRegistro("26/12/2024");
-//		informacionCorreo.setPuntaje("5 puntos");
-
-		// PRODUCCION
 		informacionCorreo.setAspiranteNombre(email.getAspiranteNombre());
 		informacionCorreo.setDestinatarioEntidad(email.getDestinatarioEntidad());
 		informacionCorreo.setCuestionarioNombre(email.getCuestionarioNombre());

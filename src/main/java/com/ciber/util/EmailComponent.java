@@ -63,6 +63,8 @@ public class EmailComponent {
 		plantillaCorreo = plantillaCorreo.replaceAll(":usuario", email.getUsuario());
 		plantillaCorreo = plantillaCorreo.replaceAll(":clave", email.getClave());
 		plantillaCorreo = plantillaCorreo.replaceAll(":fecha", email.getFechaFinalizacion());
+		plantillaCorreo = plantillaCorreo.replaceAll(":enlace", email.getEnlaceLogin());
+		
 
 		return plantillaCorreo;
 	}
