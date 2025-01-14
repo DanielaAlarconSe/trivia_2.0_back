@@ -14,6 +14,7 @@ public class UsuarioRowMapper implements RowMapper<Usuario>{
 	public Usuario mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Usuario user = new Usuario();
 		user.setCodigo(rs.getInt("usu_codigo"));
+		user.setHora(rs.getTimestamp("hora"));
 		user.setPassword(rs.getString("uwd2"));
 		user.setTipoUsurioCodigo(rs.getInt("ust_codigo"));
 		user.setTipoUsurioNombre(rs.getString("ust_nombre"));

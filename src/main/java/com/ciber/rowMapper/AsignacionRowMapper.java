@@ -25,6 +25,8 @@ public class AsignacionRowMapper implements RowMapper<AsignacionDto> {
 		asi.setAsignacionCodigo(rs.getInt("ast_codigo"));
 		asi.setCuestionarioCodigo(rs.getInt("cue_codigo"));
 		asi.setCuestionarioNombre(rs.getString("cue_nombre"));
+		asi.setCuestionarioFechaInicio(rs.getTimestamp("cue_fecha_inicio"));
+		asi.setCuestionarioFechaFin(rs.getTimestamp("cue_fecha_fin"));
 		asi.setFechaAsignacion(rs.getTimestamp("ast_fecha_asignacion"));
 		asi.setFechaFinalizacion(rs.getTimestamp("ast_fecha_finalizacion"));
 		asi.setSeguimientoCodigo(rs.getInt("seg_codigo"));

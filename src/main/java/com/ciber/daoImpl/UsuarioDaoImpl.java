@@ -25,13 +25,13 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	@SuppressWarnings("deprecation")
 	@Override
 	public Usuario buscarUsuario(String username) {
-		String sql = "SELECT * FROM principal.vista_usuario vu "
+		String sql = "SELECT *, current_timestamp as hora FROM principal.vista_usuario vu "
 				+ " left join principal.usuario u on vu.per_codigo = u.per_codigo "
 				+ " left join principal.usuario_tipo ut on u.ust_codigo = ut.ust_codigo "
 				+ " left join principal.entidad e on u.ent_codigo = e.ent_codigo "
 				+ " left join principal.asignacion_trivia ast on u.usu_codigo = ast.usu_codigo "
 				+ " left join principal.cuestionario c on ast.cue_codigo = c.cue_codigo "
-				+ " WHERE vu.usu_nombre = ? AND vu.usu_estado = 1 LIMIT 1;";
+				+ " WHERE vu.usu_nombre = ? AND vu.usu_estado = 1 order by ast.ast_codigo LIMIT 1;";
 		return jdbcTemplate.queryForObject(sql, new Object[] { username }, new UsuarioRowMapper());
 	}
 

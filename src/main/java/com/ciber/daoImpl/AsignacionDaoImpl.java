@@ -34,7 +34,7 @@ public class AsignacionDaoImpl implements IAsignacionDao {
 				+ "left join principal.asignacion_trivia at on u.usu_codigo = at.usu_codigo "
 				+ "left join principal.cuestionario cu on at.cue_codigo = cu.cue_codigo "
 				+ "left join principal.seguimiento s on at.seg_codigo = s.seg_codigo "
-				+ "where u.ent_codigo = ? and u.usu_estado = 1 and at.ast_codigo is not null";
+				+ "where u.ent_codigo = ? and u.usu_estado = 1 and at.ast_codigo is not null and at.ast_estado = 1";
 
 		return jdbcTemplate.query(sql, new AsignacionSetExtractor(), entidad);
 	}

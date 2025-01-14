@@ -21,6 +21,8 @@ public class AsignacionDto {
 	private Integer asignacionCodigo;
 	private Integer cuestionarioCodigo;
 	private String cuestionarioNombre;
+	private Timestamp cuestionarioFechaInicio;
+	private Timestamp cuestionarioFechaFin;
 	private Timestamp fechaAsignacion;
 	private Timestamp fechaFinalizacion;
 	private Integer seguimientoCodigo;
