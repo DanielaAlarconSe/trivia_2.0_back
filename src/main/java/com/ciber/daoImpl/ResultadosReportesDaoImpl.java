@@ -33,7 +33,7 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
 	@Override
 	public float obtenerResultadoTrivia(Integer codigo) {
 
-		String sql = "select rc.rec_calificacion_total from principal.respuesta_cuestionario rc where rc.rec_codigo = ? ;";
+		String sql = "select rc.rec_calificacion_total from public.respuesta_cuestionario rc where rc.rec_codigo = ? ;";
 
 		return jdbcTemplate.queryForObject(sql, Float.class, codigo);
 
@@ -42,9 +42,9 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
 	@Override
 	public List<Calificacion> obtenerCalificaciones() {
 
-		String sql = "select * from principal.respuesta_cuestionario rc "
-				+ "inner join principal.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
-				+ "left join principal.curso c on cu.cur_codigo = c.cur_codigo "
+		String sql = "select * from public.respuesta_cuestionario rc "
+				+ "inner join public.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
+				+ "left join public.curso c on cu.cur_codigo = c.cur_codigo "
 				+ "group by rc.rec_codigo, c.cur_codigo, cu.cue_codigo, rc.rec_calificacion_total "
 				+ "order by rc.rec_calificacion_total desc;";
 
@@ -55,9 +55,9 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
 	@Override
 	public List<Calificacion> obtenerCalificacionesTrivia(Integer codigo) {
 
-		String sql = "select * from principal.respuesta_cuestionario rc "
-				+ "inner join principal.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
-				+ "left join principal.curso c on cu.cur_codigo = c.cur_codigo " + "where rc.cue_codigo = ? "
+		String sql = "select * from public.respuesta_cuestionario rc "
+				+ "inner join public.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
+				+ "left join public.curso c on cu.cur_codigo = c.cur_codigo " + "where rc.cue_codigo = ? "
 				+ "group by rc.rec_codigo, c.cur_codigo, cu.cue_codigo, rc.rec_calificacion_total "
 				+ "order by rc.rec_calificacion_total desc;";
 
@@ -68,9 +68,9 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
 	@Override
 	public List<Calificacion> obtenerCalificacionesToken(String token) {
 
-		String sql = "select * from principal.respuesta_cuestionario rc "
-				+ "inner join principal.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
-				+ "left join principal.curso c on cu.cur_codigo = c.cur_codigo "
+		String sql = "select * from public.respuesta_cuestionario rc "
+				+ "inner join public.cuestionario cu on rc.cue_codigo = cu.cue_codigo "
+				+ "left join public.curso c on cu.cur_codigo = c.cur_codigo "
 				+ "WHERE cu.cue_token = ? AND cu.cue_estado = 1 AND cu.cue_fecha_fin <= NOW() "
 				+ "group by rc.rec_codigo, c.cur_codigo, cu.cue_codigo, rc.rec_calificacion_total "
 				+ "ORDER BY rc.rec_calificacion_total DESC, rc.rec_fecha_registro ASC;";
@@ -87,11 +87,11 @@ public class ResultadosReportesDaoImpl implements IResultadosReportesDao {
 				.append("        rc.rec_estudiante_nombre, ").append("        rc.rec_fecha_registro,")
 				.append("        pr.pre_codigo, ").append("        ro.reo_nombre,")
 				.append("        rc.rec_calificacion_total").append("    FROM ")
-				.append("        principal.respuesta_cuestionario rc ")
-				.append("        INNER JOIN principal.respuesta r ON r.rec_codigo = rc.rec_codigo")
-				.append("        INNER JOIN principal.pregunta_respuesta pr ON r.prr_codigo = pr.prr_codigo")
-				.append("        INNER JOIN principal.pregunta p ON pr.pre_codigo = p.pre_codigo ")
-				.append("        INNER JOIN principal.respuesta_opcion ro ON pr.reo_codigo = ro.reo_codigo ")
+				.append("        public.respuesta_cuestionario rc ")
+				.append("        INNER JOIN public.respuesta r ON r.rec_codigo = rc.rec_codigo")
+				.append("        INNER JOIN public.pregunta_respuesta pr ON r.prr_codigo = pr.prr_codigo")
+				.append("        INNER JOIN public.pregunta p ON pr.pre_codigo = p.pre_codigo ")
+				.append("        INNER JOIN public.respuesta_opcion ro ON pr.reo_codigo = ro.reo_codigo ")
 				.append("    WHERE ").append("        rc.cue_codigo = ?").append(")").append("SELECT ")
 				.append("    rec_codigo,").append("    rec_estudiante_nombre,").append("    rec_fecha_registro,");
 

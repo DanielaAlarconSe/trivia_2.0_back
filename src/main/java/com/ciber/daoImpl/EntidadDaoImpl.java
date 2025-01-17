@@ -26,7 +26,7 @@ public class EntidadDaoImpl implements IEntidadDao {
 	@Override
 	public int registrarEntidad(Entidad entidad) {
 
-		String sql = " INSERT INTO principal.entidad (ent_nombre, ent_direccion, "
+		String sql = " INSERT INTO public.entidad (ent_nombre, ent_direccion, "
 				+ " ent_telefono, ent_email) VALUES (?, ?, ?, ?) ";
 
 		int result = jdbcTemplateEjecucion.update(sql, new Object[] { entidad.getNombre(), entidad.getDireccion(),
@@ -53,7 +53,7 @@ public class EntidadDaoImpl implements IEntidadDao {
 	@Override
 	public int actualizarEntidad(Entidad entidad) {
 
-		String sql = " UPDATE principal.entidad " + " SET ent_nombre = ?, ent_direccion = ?, ent_telefono = ?, "
+		String sql = " UPDATE public.entidad " + " SET ent_nombre = ?, ent_direccion = ?, ent_telefono = ?, "
 				+ " ent_email = ? " + " WHERE ent_codigo = ? ";
 
 		int result = jdbcTemplateEjecucion.update(sql, new Object[] { entidad.getNombre(), entidad.getDireccion(),
@@ -80,7 +80,7 @@ public class EntidadDaoImpl implements IEntidadDao {
 	@Override
 	public int eliminarEntidad(Entidad entidad) {
 
-		String sql = " UPDATE principal.entidad SET ent_estado  = 0 " + " WHERE ent_codigo  = ? ";
+		String sql = " UPDATE public.entidad SET ent_estado  = 0 " + " WHERE ent_codigo  = ? ";
 
 		int result = jdbcTemplateEjecucion.update(sql, new Object[] { entidad.getCodigo() });
 
@@ -101,7 +101,7 @@ public class EntidadDaoImpl implements IEntidadDao {
 	@Override
 	public List<Entidad> obtenerEntidad() {
 		
-		String sql = " select * from principal.entidad e where e.ent_estado = 1 order by e.ent_codigo asc";
+		String sql = " select * from public.entidad e where e.ent_estado = 1 order by e.ent_codigo asc";
 		
 		return jdbcTemplate.query(sql, new EntidadSetExtractor());
 	}

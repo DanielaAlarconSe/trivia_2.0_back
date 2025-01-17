@@ -20,7 +20,7 @@ public class WebParametroDaoImpl implements IWebParametroDao {
 	@Override
 	public String getValor(String nombre) {
 
-		String sql = " SELECT wep_valor FROM principal.web_parametro WHERE wep_nombre = ? ";
+		String sql = " SELECT wep_valor FROM public.web_parametro WHERE wep_nombre = ? ";
 
 		try {
 			return jdbcTemplate.queryForObject(sql, new Object[] { nombre }, String.class);

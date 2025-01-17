@@ -37,7 +37,7 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 	@Override
 	public List<Seguimiento> obtenerSeguimiento() {
 
-		String sql = " SELECT seg_codigo,seg_nombre,seg_estado  " + " FROM principal.seguimiento"
+		String sql = " SELECT seg_codigo,seg_nombre,seg_estado  " + " FROM public.seguimiento"
 				+ " WHERE seg_estado = 1 ";
 
 		return jdbcTemplate.query(sql, new SeguimientoSetExtractor());
@@ -84,7 +84,7 @@ public class SeguimientoDaoImpl implements ISeguimientoDao {
 	@Override
 	public int actualizarSeguimiento(AsignacionTrivia asignacion) {
 
-		String sql = " UPDATE principal.asignacion_trivia SET seg_codigo = ? " + " WHERE ast_codigo = ? ";
+		String sql = " UPDATE public.asignacion_trivia SET seg_codigo = ? " + " WHERE ast_codigo = ? ";
 
 		int result = jdbcTemplateEjecucion.update(sql,
 				new Object[] { asignacion.getSeguimiento(), asignacion.getCodigo() });

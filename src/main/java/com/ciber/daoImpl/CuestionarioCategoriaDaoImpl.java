@@ -24,9 +24,9 @@ public class CuestionarioCategoriaDaoImpl implements ICuestionarioCategoriaDao{
 		String sql = "";
 		
 		if(usuarioTipo == 2) {
-			sql = "select * from principal.cuestionario_categoria c where c.cuc_estado = 1 and c.cuc_codigo in (1,3)";		
+			sql = "select * from public.cuestionario_categoria c where c.cuc_estado = 1 and c.cuc_codigo in (1,3)";		
 		}else {
-			sql = "select * from principal.cuestionario_categoria c where c.cuc_estado = 1 ";
+			sql = "select * from public.cuestionario_categoria c where c.cuc_estado = 1 ";
 		}
 		
 		return jdbcTemplate.query(sql, new CategoriaSetExtractor());

@@ -29,7 +29,7 @@ public class PersonaDaoImpl implements IPersonaDao {
 	@Override
 	public List<Persona> obtenerPersonaCodigo(Integer id) {
 
-		String sql = " SELECT * FROM principal.persona p " + " WHERE p.per_codigo = '" + id + "' AND p.per_estado = 1 ";
+		String sql = " SELECT * FROM public.persona p " + " WHERE p.per_codigo = '" + id + "' AND p.per_estado = 1 ";
 		return jdbcTemplate.query(sql, new PersonaSetExtractor());
 
 	}
@@ -37,8 +37,8 @@ public class PersonaDaoImpl implements IPersonaDao {
 	@Override
 	public List<Persona> obtenerPersonas() {
 
-		String sql = " SELECT * FROM principal.persona p "
-				+ " inner join principal.pais pa on p.per_pais_residencia = pa.pai_codigo " + " WHERE p.per_estado = 1 "
+		String sql = " SELECT * FROM public.persona p "
+				+ " inner join public.pais pa on p.per_pais_residencia = pa.pai_codigo " + " WHERE p.per_estado = 1 "
 				+ " ORDER BY p.per_codigo desc";
 		return jdbcTemplate.query(sql, new PersonaSetExtractor());
 

@@ -26,10 +26,10 @@ public class PreguntaRespuestaDaoImpl implements IPreguntaRespuestaDao {
 	@Override
 	public List<PreguntaRespuesta> obtenerPreguntaRespuestas(int codigo) {
 		
-		String sql = "select * from principal.pregunta_respuesta pr "
-				+ "inner join principal.pregunta p on pr.pre_codigo = p.pre_codigo "
-				+ "inner join principal.respuesta_opcion ro on pr.reo_codigo = ro.reo_codigo "
-				+ "inner join principal.cuestionario c on p.cue_codigo = c.cue_codigo "
+		String sql = "select * from public.pregunta_respuesta pr "
+				+ "inner join public.pregunta p on pr.pre_codigo = p.pre_codigo "
+				+ "inner join public.respuesta_opcion ro on pr.reo_codigo = ro.reo_codigo "
+				+ "inner join public.cuestionario c on p.cue_codigo = c.cue_codigo "
 				+ "where pr.pre_codigo = " + codigo + " and pr.prr_estado = 1 "
 				+ "order by pr.prr_codigo asc";
 
@@ -40,7 +40,7 @@ public class PreguntaRespuestaDaoImpl implements IPreguntaRespuestaDao {
 	@Override
 	public int registrarPreguntaRespuesta(PreguntaRespuesta preguntaRespuesta) {
 		
-		String sql = "INSERT INTO principal.pregunta_respuesta "
+		String sql = "INSERT INTO public.pregunta_respuesta "
 				+ "(pre_codigo, reo_codigo) "
 				+ "VALUES(?, ?);";
 
@@ -67,7 +67,7 @@ public class PreguntaRespuestaDaoImpl implements IPreguntaRespuestaDao {
 	@Override
 	public int actualizarPreguntaRespuesta(PreguntaRespuesta preguntaRespuesta) {
 		
-		String sql = "UPDATE principal.pregunta_respuesta "
+		String sql = "UPDATE public.pregunta_respuesta "
 				+ "SET pre_codigo = ?, reo_codigo = ?, prr_estado = ? "
 				+ "WHERE prr_codigo = ?;";
 

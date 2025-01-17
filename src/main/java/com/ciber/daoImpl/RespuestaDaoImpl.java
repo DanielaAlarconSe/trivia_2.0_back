@@ -37,8 +37,8 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 	@Override
 	public List<RespuestaOpcion> obtenerRespuestasCuestionario(int codigo) {
 
-		String sql = "select * from principal.respuesta_opcion ro "
-				+ "inner join principal.cuestionario c on ro.cue_codigo = c.cue_codigo " + "where ro.cue_codigo = "
+		String sql = "select * from public.respuesta_opcion ro "
+				+ "inner join public.cuestionario c on ro.cue_codigo = c.cue_codigo " + "where ro.cue_codigo = "
 				+ codigo + " and ro.reo_estado = 1 " + "order by ro.reo_codigo asc";
 
 		return jdbcTemplate.query(sql, new RespuestaOpcionSetExtractor());
@@ -48,7 +48,7 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 	@Override
 	public List<RespuestaTipo> obtenerRespuestaTipo() {
 
-		String sql = "select * from principal.respuesta_tipo rt where rt.ret_estado = 1";
+		String sql = "select * from public.respuesta_tipo rt where rt.ret_estado = 1";
 
 		return jdbcTemplate.query(sql, new RespuestaTipoSetExtractor());
 
@@ -56,7 +56,7 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 
 	@Override
 	public int obtenerUltimoRegistro() {
-	    String sql = "select rc.rec_codigo from principal.respuesta_cuestionario rc order by rc.rec_codigo desc limit 1;";
+	    String sql = "select rc.rec_codigo from public.respuesta_cuestionario rc order by rc.rec_codigo desc limit 1;";
 	    try {
 	        return jdbcTemplate.queryForObject(sql, Integer.class);
 	    } catch (EmptyResultDataAccessException e) {
@@ -67,7 +67,7 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 	@Override
 	public int registrarRespuesta(RespuestaOpcion respuestaOpcion) {
 
-		String sql = "INSERT INTO principal.respuesta_opcion " + "(reo_nombre, cue_codigo, reo_puntuacion) "
+		String sql = "INSERT INTO public.respuesta_opcion " + "(reo_nombre, cue_codigo, reo_puntuacion) "
 				+ "VALUES(?, ?, ?);";
 
 		int result = jdbcTemplateEjecucion.update(sql, new Object[] { respuestaOpcion.getNombre(),
@@ -94,7 +94,7 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 	@Override
 	public int actualizarRespuesta(RespuestaOpcion respuestaOpcion) {
 
-		String sql = "UPDATE principal.respuesta_opcion "
+		String sql = "UPDATE public.respuesta_opcion "
 				+ "SET reo_nombre = ?, cue_codigo = ?, reo_puntuacion = ?, reo_estado = ? " + "WHERE reo_codigo = ?;";
 
 		int result = jdbcTemplateEjecucion.update(sql,
@@ -126,9 +126,9 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 
 		String ip = request.getHeader("X-Forwarded-For");
 
-		String sql = "INSERT INTO principal.respuesta_cuestionario "
+		String sql = "INSERT INTO public.respuesta_cuestionario "
 				+ "(rec_estudiante_nombre, cue_codigo, rec_calificacion_total, rec_total_preguntas, rec_ip_address) "
-				+ "VALUES(?, ?, ?, (SELECT COUNT(*) FROM principal.pregunta WHERE cue_codigo = ? and pre_estado = 1), ?);";
+				+ "VALUES(?, ?, ?, (SELECT COUNT(*) FROM public.pregunta WHERE cue_codigo = ? and pre_estado = 1), ?);";
 
 		int result = jdbcTemplateEjecucion.update(sql,
 				new Object[] { respuestaCuestionario.getEstudianteNombre(),
@@ -158,7 +158,7 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 	@Override
 	public int registrarRespuestaTrivia(Respuesta respuesta) {
 
-		String sql = "INSERT INTO principal.respuesta " + "(rec_codigo, prr_codigo, pre_codigo) " + "VALUES(?, ?, ?);";
+		String sql = "INSERT INTO public.respuesta " + "(rec_codigo, prr_codigo, pre_codigo) " + "VALUES(?, ?, ?);";
 
 		int result = jdbcTemplateEjecucion.update(sql, new Object[] { respuesta.getRespuestaCuestionarioCodigo(),
 				respuesta.getPreguntaRespuestaCodigo(), respuesta.getPreguntaCodigo() });
@@ -184,7 +184,7 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 	@Override
 	public int actualizarCalificacion(RespuestaCuestionario respuestaCuestionario) {
 
-		String sql = "UPDATE principal.respuesta_cuestionario " + "SET rec_calificacion_total = ? "
+		String sql = "UPDATE public.respuesta_cuestionario " + "SET rec_calificacion_total = ? "
 				+ "WHERE rec_codigo = ?;";
 
 		int result = jdbcTemplateEjecucion.update(sql,
@@ -209,8 +209,8 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 	@Override
 	public List<RespuestaCuestionario> obtenerResultadosEscalafonPorToken(String token) {
 
-		String sql = " SELECT * FROM principal.respuesta_cuestionario rc "
-				+ " INNER JOIN principal.cuestionario c ON rc.cue_codigo = c.cue_codigo "
+		String sql = " SELECT * FROM public.respuesta_cuestionario rc "
+				+ " INNER JOIN public.cuestionario c ON rc.cue_codigo = c.cue_codigo "
 				+ " WHERE c.cue_token = ? AND c.cue_estado = 1 AND c.cue_fecha_fin <= NOW() "
 				+ " ORDER BY rc.rec_calificacion_total DESC ";
 
@@ -225,7 +225,7 @@ public class RespuestaDaoImpl implements IRespuestaDao {
 		//ip = "12345";
 		
 		int result = 0;
-		String sql = " select COUNT(rec_codigo) from principal.respuesta_cuestionario where rec_ip_address = ? ";
+		String sql = " select COUNT(rec_codigo) from public.respuesta_cuestionario where rec_ip_address = ? ";
 		result = jdbcTemplate.queryForObject(sql, new Object[] { ip }, Integer.class);
 		return result > 0 ? true : false;
 	}
