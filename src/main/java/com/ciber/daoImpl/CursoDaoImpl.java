@@ -24,20 +24,32 @@ public class CursoDaoImpl implements ICursoDao {
 	public JdbcTemplate jdbcTemplateEjecucion;
 
 	@Override
-	public List<Curso> obtenerCursos() {
+	public List<Curso> obtenerCursos(Integer usuario, Integer persona) {
 
-		String sql = " SELECT c.cur_codigo , c.cur_nombre , c.cur_descripcion , p.per_nombre || ' ' || p.per_apellido AS nombre_completo, p.per_codigo "
-				+ " FROM principal.curso c " 
-				+ " INNER JOIN principal.persona p ON c.per_codigo = p.per_codigo "
-				+ " WHERE c.cur_estado = 1 ";
+		String sql = "";
+		
+		if(usuario == 2) {
+			
+			sql = "select c.cur_codigo , c.cur_nombre , c.cur_descripcion, "
+					+ "p.per_nombre || ' ' || p.per_apellido as nombre_completo, p.per_codigo from public.curso c "
+					+ "inner join public.persona p on c.per_codigo = p.per_codigo "
+					+ "where c.cur_estado = 1 and p.per_codigo = ?";
+			return jdbcTemplate.query(sql, new CursoSetExtractor(), persona);
+			
+		}else {
+			sql = "select c.cur_codigo , c.cur_nombre , c.cur_descripcion, "
+					+ "p.per_nombre || ' ' || p.per_apellido as nombre_completo, p.per_codigo from public.curso c "
+					+ "inner join public.persona p on c.per_codigo = p.per_codigo "
+					+ "where c.cur_estado = 1";
+			return jdbcTemplate.query(sql, new CursoSetExtractor());
+		}
 
-		return jdbcTemplate.query(sql, new CursoSetExtractor());
 	}
 
 	@Override
 	public int registrarCurso(Curso curso) {
 
-		String sql = " INSERT INTO principal.curso (cur_nombre , per_codigo , cur_descripcion) " + " VALUES(?, ?, ?); ";
+		String sql = " INSERT INTO public.curso (cur_nombre , per_codigo , cur_descripcion) " + " VALUES(?, ?, ?); ";
 
 		int result = jdbcTemplateEjecucion.update(sql,
 				new Object[] { curso.getNombre(), curso.getInstructor(), curso.getDescripcion() });
@@ -62,7 +74,7 @@ public class CursoDaoImpl implements ICursoDao {
 	@Override
 	public int actualizar(Curso curso) {
 
-		String sql = " UPDATE principal.curso " + " SET cur_nombre  = ?, per_codigo  = ?, cur_descripcion  = ? "
+		String sql = " UPDATE public.curso " + " SET cur_nombre  = ?, per_codigo  = ?, cur_descripcion  = ? "
 				+ " WHERE cur_codigo  = ?; ";
 
 		int result = jdbcTemplateEjecucion.update(sql,
@@ -88,7 +100,7 @@ public class CursoDaoImpl implements ICursoDao {
 	@Override
 	public int eliminarCurso(Curso curso) {
 		
-		String sql = " UPDATE principal.curso " + " SET cur_estado  = 0 "
+		String sql = " UPDATE public.curso " + " SET cur_estado  = 0 "
 				+ " WHERE cur_codigo  = ?; ";
 		int result = jdbcTemplateEjecucion.update(sql,
 				new Object[] { curso.getCodigo() });

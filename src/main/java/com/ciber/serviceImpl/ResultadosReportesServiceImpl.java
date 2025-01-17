@@ -22,6 +22,20 @@ public class ResultadosReportesServiceImpl implements IResultadosReportesService
 		return dao.obtenerResultadoTrivia(codigo);
 		
 	}
+	
+	@Override
+	public List<Calificacion> obtenerCalificacionesTrivia(Integer codigo) {
+		
+		return dao.obtenerCalificacionesTrivia(codigo);
+		
+	}
+	
+	@Override
+	public List<Calificacion> obtenerCalificacionesToken(String token) {
+		
+		return dao.obtenerCalificacionesToken(token);
+		
+	}
 
 	@Override
 	public List<Calificacion> obtenerCalificaciones() {

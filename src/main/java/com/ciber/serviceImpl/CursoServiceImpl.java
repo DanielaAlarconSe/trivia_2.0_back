@@ -16,8 +16,8 @@ public class CursoServiceImpl implements ICursoService {
 	ICursoDao dao;
 
 	@Override
-	public List<Curso> obtenerCurso() {
-		return dao.obtenerCursos();
+	public List<Curso> obtenerCurso(Integer usuario, Integer persona) {
+		return dao.obtenerCursos(usuario, persona);
 	}
 
 	@Override

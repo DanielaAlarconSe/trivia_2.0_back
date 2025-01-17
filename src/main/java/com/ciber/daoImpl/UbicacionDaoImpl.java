@@ -21,7 +21,7 @@ public class UbicacionDaoImpl implements IUbicacionDao {
 	@Override
 	public List<Pais> obtenerPaisLocal() {
 
-		String sql = "select * from principal.pais p where p.pai_codigo = 43";
+		String sql = "select * from public.pais p where p.pai_codigo = 43";
 
 		return jdbcTemplate.query(sql, new PaisSetExtractor());
 	}
@@ -29,7 +29,7 @@ public class UbicacionDaoImpl implements IUbicacionDao {
 	@Override
 	public List<Pais> obtenerPaises() {
 
-		String sql = "select * from principal.pais ";
+		String sql = "select * from public.pais ";
 
 		return jdbcTemplate.query(sql, new PaisSetExtractor());
 

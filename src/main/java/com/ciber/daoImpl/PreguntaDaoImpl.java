@@ -29,9 +29,9 @@ public class PreguntaDaoImpl implements IPreguntaDao{
 	@Override
 	public List<Pregunta> obtenerPreguntasCuestionario(int codigo) {
 		
-		String sql = "select * from principal.pregunta p "
-				+ "inner join principal.cuestionario c on p.cue_codigo = c.cue_codigo "
-				+ "inner join principal.respuesta_tipo rt on p.ret_codigo = rt.ret_codigo "
+		String sql = "select * from public.pregunta p "
+				+ "inner join public.cuestionario c on p.cue_codigo = c.cue_codigo "
+				+ "inner join public.respuesta_tipo rt on p.ret_codigo = rt.ret_codigo "
 				+ "where p.pre_estado = 1 and p.cue_codigo = " + codigo + " "
 				+ "order by p.pre_codigo asc";
 
@@ -42,7 +42,7 @@ public class PreguntaDaoImpl implements IPreguntaDao{
 	@Override
 	public List<RespuestaTipo> obtenerRespuestaTipo() {
 		
-		String sql = "select * from principal.respuesta_tipo rt where rt.ret_estado = 1";
+		String sql = "select * from public.respuesta_tipo rt where rt.ret_estado = 1";
 
 		return jdbcTemplate.query(sql, new RespuestaTipoSetExtractor());
 		
@@ -52,7 +52,7 @@ public class PreguntaDaoImpl implements IPreguntaDao{
 	@Override
 	public int registrarPregunta(Pregunta pregunta) {
 		
-		String sql = "INSERT INTO principal.pregunta "
+		String sql = "INSERT INTO public.pregunta "
 				+ "(pre_nombre, cue_codigo, ret_codigo, pre_texto_adicional) "
 				+ "VALUES(?, ?, ?, ?);";
 
@@ -81,7 +81,7 @@ public class PreguntaDaoImpl implements IPreguntaDao{
 	@Override
 	public int actualizarPregunta(Pregunta pregunta) {
 		
-		String sql = "UPDATE principal.pregunta "
+		String sql = "UPDATE public.pregunta "
 				+ "SET pre_nombre = ?, cue_codigo = ?, ret_codigo = ?, pre_texto_adicional = ?, pre_estado = ? "
 				+ "WHERE pre_codigo = ?;";
 

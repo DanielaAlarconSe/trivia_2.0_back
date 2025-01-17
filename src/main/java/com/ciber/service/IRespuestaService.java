@@ -24,5 +24,9 @@ public interface IRespuestaService {
 	public int registrarRespuestaTrivia(Respuesta respuesta);
 	
 	public int actualizarCalificacion(RespuestaCuestionario respuestaCuestionario);
+	
+	public List<RespuestaCuestionario> obtenerResultadosEscalafonPorToken(String token);
+	
+	public boolean validarIp();
 
 }

@@ -1,5 +1,7 @@
 package com.ciber.entities;
 
+import java.sql.Timestamp;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,11 +9,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Usuario {
 
-	private int codigo;
+	private Integer codigo;
+	private Timestamp hora;
 	private String username;
 	private String password;
-	private boolean state;
 	private PersonaUsuario persona;
-	private int role;
+	private Integer tipoUsurioCodigo;
+	private String tipoUsurioNombre;
+	private Integer entidadCodigo;
+	private String entidadNombre;
+	private Integer role;
+	private String token;
+	private boolean state;
 
 }

@@ -17,5 +17,7 @@ public interface IPersonaService {
 
 	public List<PersonaDto> obtenerPersonasUsuario();
 	
+	public List<PersonaDto> obtenerAspirantesEntidad(Integer entidad);
+	
 	public List<Persona> obtenerInstructores();
 }

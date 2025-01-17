@@ -16,6 +16,9 @@ public class Cuestionario {
 	private String cursoNombre;
 	private Timestamp  fechaInicio;
 	private Timestamp  fechaFin;
+	private Integer categoriaCodigo;
+	private String categoriaNombre;
+	private String token;
 	private Integer estado;
 
 }

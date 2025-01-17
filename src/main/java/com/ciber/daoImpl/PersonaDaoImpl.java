@@ -29,7 +29,7 @@ public class PersonaDaoImpl implements IPersonaDao {
 	@Override
 	public List<Persona> obtenerPersonaCodigo(Integer id) {
 
-		String sql = " SELECT * FROM principal.persona p " + " WHERE p.per_codigo = '" + id + "' AND p.per_estado = 1 ";
+		String sql = " SELECT * FROM public.persona p " + " WHERE p.per_codigo = '" + id + "' AND p.per_estado = 1 ";
 		return jdbcTemplate.query(sql, new PersonaSetExtractor());
 
 	}
@@ -37,8 +37,8 @@ public class PersonaDaoImpl implements IPersonaDao {
 	@Override
 	public List<Persona> obtenerPersonas() {
 
-		String sql = " SELECT * FROM principal.persona p "
-				+ " inner join principal.pais pa on p.per_pais_residencia = pa.pai_codigo " + " WHERE p.per_estado = 1 "
+		String sql = " SELECT * FROM public.persona p "
+				+ " inner join public.pais pa on p.per_pais_residencia = pa.pai_codigo " + " WHERE p.per_estado = 1 "
 				+ " ORDER BY p.per_codigo desc";
 		return jdbcTemplate.query(sql, new PersonaSetExtractor());
 
@@ -101,15 +101,27 @@ public class PersonaDaoImpl implements IPersonaDao {
 	@Override
 	public List<PersonaDto> obtenerPersonasUsuario() {
 
-		String sql = "SELECT p.per_codigo, p.per_nombre, p.per_apellido, p.per_email, p.per_pais_residencia, p.per_fecha_registro, u.uwd2 , ut.ust_codigo , ut.ust_nombre, "
-				+ "COUNT(CASE WHEN u.usu_estado = 1 THEN 1 ELSE NULL END) AS usuario FROM principal.persona p "
-				+ "LEFT JOIN principal.usuario u ON p.per_codigo = u.per_codigo "
-				+ "LEFT JOIN principal.usuario_tipo ut on u.ust_codigo = ut.ust_codigo "
-				+ "WHERE p.per_estado = 1 "
-				+ "GROUP BY p.per_codigo, p.per_nombre, p.per_apellido, p.per_email, p.per_pais_residencia, p.per_fecha_registro, u.uwd2 , ut.ust_codigo , ut.ust_nombre "
-				+ "ORDER BY usuario desc;";
+		String sql = "select p.per_codigo, p.per_nombre, p.per_apellido, p.per_email, p.per_pais_residencia, p.per_fecha_registro, "
+				+ "u.uwd2 , ut.ust_codigo , ut.ust_nombre, count(case when u.usu_estado = 1 then 1 else null end) as usuario, e.ent_codigo, e.ent_nombre from principal.persona p "
+				+ "left join principal.usuario u on p.per_codigo = u.per_codigo "
+				+ "left join principal.usuario_tipo ut on u.ust_codigo = ut.ust_codigo "
+				+ "left join principal.entidad e on u.ent_codigo = e.ent_codigo "
+				+ "where p.per_estado = 1 group by p.per_codigo, p.per_nombre, p.per_apellido, p.per_email, "
+				+ "p.per_pais_residencia, p.per_fecha_registro, u.uwd2 , ut.ust_codigo , ut.ust_nombre, e.ent_codigo, e.ent_nombre order by usuario desc;";
 
 		return jdbcTemplate.query(sql, new PersonaDtoSetExtractor());
+	}
+	
+	@Override
+	public List<PersonaDto> obtenerAspirantesEntidad(Integer entidad) {
+
+		String sql = "select *, u.usu_codigo as usuario from principal.usuario u "
+				+ "inner join principal.usuario_tipo ut on u.ust_codigo  = ut.ust_codigo "
+				+ "inner join principal.persona p on u.per_codigo = p.per_codigo "
+				+ "left join principal.entidad e on u.ent_codigo = e.ent_codigo "
+				+ "where u.ent_codigo = ? and u.usu_estado = 1 and p.per_estado = 1";
+
+		return jdbcTemplate.query(sql, new PersonaDtoSetExtractor(), entidad);
 	}
 
 	@Override

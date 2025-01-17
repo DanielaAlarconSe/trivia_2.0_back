@@ -21,7 +21,7 @@ public class UsuarioTipoDaoImpl implements IUsuarioTipoDao {
 	@Override
 	public List<UsuarioTipo> obtenerTipoUsuario() {
 
-		String sql = " SELECT * FROM principal.usuario_tipo ut WHERE ut.ust_codigo in (1,2) AND ut.ust_estado = 1 ";
+		String sql = " SELECT * FROM public.usuario_tipo ut WHERE ut.ust_codigo in (1,2,4) AND ut.ust_estado = 1 ";
 
 		return jdbcTemplate.query(sql, new UsuarioTipoSetExtrator());
 	}

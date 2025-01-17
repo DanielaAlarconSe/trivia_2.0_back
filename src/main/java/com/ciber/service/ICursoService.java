@@ -6,7 +6,7 @@ import com.ciber.entities.Curso;
 
 public interface ICursoService {
 
-	public List<Curso> obtenerCurso();
+	public List<Curso> obtenerCurso(Integer usuario, Integer persona);
 
 	public int registrarCurso(Curso curso);
 

@@ -42,8 +42,6 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 		}
 		Usuario usuario = usuariodao.buscarUsuario(username);
 
-		// System.out.print("USUARIO:::" + usuario);
-		// con este List sacamos todos los roles del usuario que se esta autenticando
 		ArrayList<Rol> roles = new ArrayList<>();
 		List<GrantedAuthority> authorities = roles.stream()
 				.map(role -> new SimpleGrantedAuthority(((Rol) role).getNombre()))
@@ -71,9 +69,10 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService {
 		usuario2.setCodigo(usuario.getCodigo());
 		usuario2.setTipo(usuario.getTipo());
 		usuario2.setUsuario(usuario.getUsuario());
+		usuario2.setEntidad(usuario.getEntidad());
+		//usuario2.setToken(usuario.getToken());
 		usuario2.setContrasena(clave);
 
-		System.out.println("usuario 2 " + usuario2);
 		return usuariodao.registrarUsuario(usuario2);
 	}
 

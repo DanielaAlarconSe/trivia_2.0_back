@@ -14,5 +14,6 @@ public class RespuestaCuestionario {
 	private int cuestionarioCodigo;
 	private Date fechaRegistro; 
 	private float calificacionTotal;
+	private String ip;
 
 }

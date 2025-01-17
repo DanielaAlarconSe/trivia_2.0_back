@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +21,9 @@ public class CursoRestController {
 	@Autowired
 	ICursoService service;
 
-	@GetMapping(path = "obtener-cursos")
-	public List<Curso> obtenerCurso() {
-		return service.obtenerCurso();
+	@GetMapping(path = "obtener-cursos/{usuario}/{persona}")
+	public List<Curso> obtenerCurso(@PathVariable Integer usuario, @PathVariable Integer persona) {
+		return service.obtenerCurso(usuario, persona);
 	}
 
 	@PostMapping(path = "registrar-curso")

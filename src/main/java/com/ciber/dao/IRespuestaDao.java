@@ -8,21 +8,24 @@ import com.ciber.entities.RespuestaOpcion;
 import com.ciber.entities.RespuestaTipo;
 
 public interface IRespuestaDao {
-	
+
 	public List<RespuestaOpcion> obtenerRespuestasCuestionario(int codigo);
-	
+
 	public List<RespuestaTipo> obtenerRespuestaTipo();
-	
+
 	public int obtenerUltimoRegistro();
 
 	public int registrarRespuesta(RespuestaOpcion respuestaOpcion);
 
 	public int actualizarRespuesta(RespuestaOpcion respuestaOpcion);
-	
+
 	public int registrarRespuestaCuestionario(RespuestaCuestionario respuestaCuestionario);
-	
+
 	public int registrarRespuestaTrivia(Respuesta respuesta);
-	
+
 	public int actualizarCalificacion(RespuestaCuestionario respuestaCuestionario);
 
+	public List<RespuestaCuestionario> obtenerResultadosEscalafonPorToken(String token);
+	
+	public boolean validarIp();
 }
